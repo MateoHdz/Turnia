@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Turnia · Calculadora de recargos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; overflow-y: auto; background: #F3F4EF; color: #16231F; font-family: Manrope, 'Segoe UI', system-ui, sans-serif; font-variant-numeric: tabular-nums">
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: #FFFFFF; border-bottom: 1px solid #DEE2DA">
+    <a href="Landing.dc.html" style="display: flex; align-items: center; gap: 8px; color: #16231F; text-decoration: none">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="#0E6B57"></rect><path d="M8 10h12M8 14h7M8 18h9" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="20" cy="18" r="3" fill="#F2B45A"></circle></svg>
+      <span style="font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 20px; font-weight: 700">Turnia</span>
+    </a>
+    <a href="Main.dc.html" style="min-height: 40px; padding: 0 12px; border-radius: 10px; background: #16231F; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center; text-decoration: none">Probar gratis</a>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 14px; padding: 18px 16px 28px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 12px; font-weight: 800; color: #0E6B57; letter-spacing: 0.04em; text-transform: uppercase">Gratis · sin registro</span>
+      <h1 style="margin: 0; font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 28px; line-height: 1.08; letter-spacing: -0.02em">¿Cuánto te cuesta este turno?</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #4A5751">Con las reglas vigentes en Colombia: dominical y festivo al 90 %, nocturno desde las 7:00 p. m. y jornada de 42 horas.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; padding: 14px; border-radius: 18px; background: #FFFFFF; border: 1px solid #DEE2DA">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="c-salario" style="font-size: 13px; font-weight: 700">Salario mensual</label>
+        <div style="display: flex; gap: 8px">
+          <input id="c-salario" type="number" inputmode="numeric" value="{{ salario }}" onChange="{{ setSalario }}" style="flex: 1; min-width: 0; height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 700 16px Manrope, sans-serif; color: #16231F; background: #FFFFFF">
+          <button onClick="{{ usarMinimo }}" style="min-height: 48px; padding: 0 10px; border-radius: 12px; border: 1px solid #DEE2DA; background: #F7F8F4; color: #0E6B57; font: 800 12px Manrope, sans-serif; line-height: 1.2">Salario<br>mínimo</button>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <label for="c-fecha" style="font-size: 13px; font-weight: 700">Fecha del turno</label>
+          <input id="c-fecha" type="date" min="2026-01-01" value="{{ fecha }}" onChange="{{ setFecha }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 10px; font: 700 14px Manrope, sans-serif; color: #16231F; background: #FFFFFF; min-width: 0">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <label for="c-horas" style="font-size: 13px; font-weight: 700">Horas a la semana</label>
+          <input id="c-horas" type="number" min="1" max="42" value="{{ horas }}" onChange="{{ setHoras }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 10px; font: 700 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF; min-width: 0">
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="c-ini" style="font-size: 13px; font-weight: 700">Entra</label><input id="c-ini" type="time" value="{{ ini }}" onChange="{{ setIni }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 10px; font: 700 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="c-fin" style="font-size: 13px; font-weight: 700">Sale</label><input id="c-fin" type="time" value="{{ fin }}" onChange="{{ setFin }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 10px; font: 700 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 13px; font-weight: 700">Estas horas son</span>
+        <div style="display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: #E6E9E2">
+          <button onClick="{{ verJornada }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloJornada }}">Parte de su jornada</button>
+          <button onClick="{{ verExtra }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloExtra }}">Horas extra</button>
+        </div>
+      </div>
+    </div>
+
+    <sc-if value="{{ hayError }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="padding: 12px 14px; border-radius: 14px; background: #FBE7DF; color: #6E2610; font-size: 14px; font-weight: 700; line-height: 1.45">{{ error }}</div>
+    </sc-if>
+
+    <sc-if value="{{ hayResultado }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 18px; background: #16231F; color: #FFFFFF">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 13px; color: #C9D3CE; font-weight: 600">{{ diaTexto }} · {{ duracion }}</span>
+        <span style="font-size: 13px; color: #E4EAE7; font-weight: 700; margin-top: 6px">Pagas además del salario</span>
+        <span style="font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.02em">{{ adicional }}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 10px; padding-top: 10px; border-top: 1px solid #2E3D37; font-size: 13px; color: #C9D3CE">
+        <span>Valor total de estas horas</span><span style="font-weight: 800; color: #FFFFFF">{{ totalHoras }}</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <sc-for list="{{ filas }}" as="f" hint-placeholder-count="2">
+          <div style="display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; font-size: 13px">
+            <span style="width: 10px; height: 10px; border-radius: 3px; background: {{ f.color }}"></span>
+            <span style="display: flex; flex-direction: column"><span style="font-weight: 700; color: #FFFFFF">{{ f.nombre }}</span><span style="font-size: 12px; color: #C9D3CE">{{ f.horas }} × {{ f.valorHora }} × {{ f.factor }}</span></span>
+            <span style="font-weight: 800">{{ f.valor }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA">
+      <span style="font-size: 15px; font-weight: 800">Por qué da esto</span>
+      <sc-for list="{{ razones }}" as="r" hint-placeholder-count="3"><span style="font-size: 13px; line-height: 1.5; color: #34413C; padding-left: 12px; border-left: 3px solid {{ r.color }}">{{ r.texto }}</span></sc-for>
+    </div>
+    </sc-if>
+
+    <div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 18px; background: #E3F1EC; color: #0B5546">
+      <span style="font-size: 17px; font-weight: 800; color: #16231F">¿Y toda la semana de tu equipo?</span>
+      <span style="font-size: 14px; line-height: 1.5">Arma el horario desde el celular y mira el costo de cada turno, las horas extra y las alertas legales antes de publicarlo.</span>
+      <a href="Main.dc.html" style="min-height: 48px; border-radius: 12px; background: #0E6B57; color: #FFFFFF; font: 800 15px Manrope, sans-serif; display: flex; align-items: center; justify-content: center; text-decoration: none">Probar 30 días gratis</a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA">
+      <label for="c-correo" style="font-size: 15px; font-weight: 800">Recibe la tabla de recargos 2026</label>
+      <sc-if value="{{ sinCorreo }}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; gap: 8px"><input id="c-correo" type="email" placeholder="tu@correo.com" value="{{ correo }}" onChange="{{ setCorreo }}" style="flex: 1; min-width: 0; height: 46px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 600 14px Manrope, sans-serif; color: #16231F; background: #FFFFFF"><button onClick="{{ enviarCorreo }}" style="min-height: 46px; padding: 0 14px; border-radius: 12px; border: 0; background: #16231F; color: #FFFFFF; font: 800 14px Manrope, sans-serif">Enviar</button></div>
+      <span style="font-size: 11px; color: #55625C; line-height: 1.4">Te avisamos también cuando cambien las reglas, como el recargo del 100 % en julio de 2027. Al enviar aceptas la política de tratamiento de datos.</span>
+      </sc-if>
+      <sc-if value="{{ conCorreo }}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; font-weight: 700; color: #0B5546">Listo. Revisa tu correo en unos minutos.</span></sc-if>
+    </div>
+
+    <span style="font-size: 12px; color: #55625C; line-height: 1.5">Los cálculos son una estimación basada en la normativa vigente y no reemplazan la asesoría de un contador.</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { salario: '1750905', fecha: '2026-10-25', horas: '42', ini: '14:00', fin: '22:00', tipo: 'jornada', correo: '', enviado: false };
+  }
+
+  motor() {
+    if (!this._motor) this._motor = crear();
+    return this._motor;
+    function crear() {
+      var R = {
+        jornadaMaxima: [{ desde: '2025-07-15', horas: 44 }, { desde: '2026-07-15', horas: 42 }],
+        inicioNocturna: [{ desde: '2025-12-25', minuto: 1140 }],
+        finNocturna: 360,
+        dominical: [{ desde: '2025-07-01', recargo: 0.8 }, { desde: '2026-07-01', recargo: 0.9 }, { desde: '2027-07-01', recargo: 1 }],
+        recargoNocturno: 0.35, extraDiurna: 1.25, extraNocturna: 1.75, descansoCompleto: true
+      };
+      var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+      var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      function pad(x) { return (x < 10 ? '0' : '') + x; }
+      function diaNum(iso) { var p = iso.split('-'); return Math.round(Date.UTC(+p[0], +p[1] - 1, +p[2]) / 86400000); }
+      function fechaDe(n) { return new Date(n * 86400000); }
+      function isoDe(n) { var d = fechaDe(n); return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()); }
+      function diaSemana(n) { return ((n + 4) % 7 + 7) % 7; }
+      function preparar(lista) { return lista.map(function (x) { var y = Object.assign({}, x); y.n = diaNum(x.desde); return y; }); }
+      var jornadas = preparar(R.jornadaMaxima), nocturnas = preparar(R.inicioNocturna), dominicales = preparar(R.dominical);
+      function vigente(lista, n) { var r = lista[0]; for (var i = 0; i < lista.length; i++) { if (lista[i].n <= n) r = lista[i]; } return r; }
+      function reglasDelDia(n) { return { horasMax: vigente(jornadas, n).horas, D: vigente(dominicales, n).recargo, inicioNoc: vigente(nocturnas, n).minuto }; }
+      function pascua(y) {
+        var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4;
+        var f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+        var i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+        var mes = Math.floor((h + l - 7 * m + 114) / 31), dia = ((h + l - 7 * m + 114) % 31) + 1;
+        return diaNum(y + '-' + pad(mes) + '-' + pad(dia));
+      }
+      function lunesSiguiente(n) { var d = diaSemana(n); return d === 1 ? n : n + ((8 - d) % 7); }
+      var cacheFestivos = {};
+      function festivosDe(y) {
+        if (cacheFestivos[y]) return cacheFestivos[y];
+        var f = {};
+        function poner(n, nombre) { f[n] = f[n] ? f[n] + ' y ' + nombre : nombre; }
+        function fijo(m, d, nombre) { poner(diaNum(y + '-' + pad(m) + '-' + pad(d)), nombre); }
+        function lunes(m, d, nombre) { poner(lunesSiguiente(diaNum(y + '-' + pad(m) + '-' + pad(d))), nombre); }
+        fijo(1, 1, 'Año Nuevo'); lunes(1, 6, 'Reyes Magos'); lunes(3, 19, 'San José');
+        fijo(5, 1, 'Día del Trabajo'); lunes(6, 29, 'San Pedro y San Pablo'); fijo(7, 20, 'Día de la Independencia');
+        fijo(8, 7, 'Batalla de Boyacá'); lunes(8, 15, 'Asunción de la Virgen'); lunes(10, 12, 'Día de la Raza');
+        lunes(11, 1, 'Todos los Santos'); lunes(11, 11, 'Independencia de Cartagena'); fijo(12, 8, 'Inmaculada Concepción');
+        fijo(12, 25, 'Navidad');
+        if (y >= 2026) lunes(7, 9, 'Virgen de Chiquinquirá');
+        var p = pascua(y);
+        poner(p - 3, 'Jueves Santo'); poner(p - 2, 'Viernes Santo');
+        poner(lunesSiguiente(p + 39), 'Ascensión del Señor'); poner(lunesSiguiente(p + 60), 'Corpus Christi'); poner(lunesSiguiente(p + 68), 'Sagrado Corazón');
+        cacheFestivos[y] = f;
+        return f;
+      }
+      function festivo(n) { return festivosDe(fechaDe(n).getUTCFullYear())[n] || null; }
+      function cop(x) { var v = Math.round(x), s = String(Math.abs(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); return (v < 0 ? '-$ ' : '$ ') + s; }
+      function horas(min) { var h = Math.floor(min / 60), m = Math.round(min % 60); if (m === 60) { h++; m = 0; } return m ? (h ? h + ' h ' + m + ' min' : m + ' min') : h + ' h'; }
+      function minDe(s) { var p = String(s || '0:0').split(':'); return (+p[0]) * 60 + (+p[1] || 0); }
+      function fechaLarga(n) { var d = fechaDe(n); return DIAS[diaSemana(n)] + ' ' + d.getUTCDate() + ' de ' + MESES[d.getUTCMonth()] + ' de ' + d.getUTCFullYear(); }
+      var TIPOS = {
+        od: 'Ordinaria diurna', on: 'Ordinaria nocturna', fd: 'Dominical o festiva diurna', fn: 'Dominical o festiva nocturna',
+        xd: 'Extra diurna', xn: 'Extra nocturna', xfd: 'Extra dominical o festiva diurna', xfn: 'Extra dominical o festiva nocturna'
+      };
+      var ORDEN_TIPOS = ['od', 'on', 'fd', 'fn', 'xd', 'xn', 'xfd', 'xfn'];
+      function factores(D) {
+        return {
+          od: { total: 1, recargo: 0 }, on: { total: 1 + R.recargoNocturno, recargo: R.recargoNocturno },
+          fd: { total: 1 + D, recargo: D }, fn: { total: 1 + D + R.recargoNocturno, recargo: D + R.recargoNocturno },
+          xd: { total: R.extraDiurna, recargo: R.extraDiurna }, xn: { total: R.extraNocturna, recargo: R.extraNocturna },
+          xfd: { total: R.extraDiurna + D, recargo: R.extraDiurna + D }, xfn: { total: R.extraNocturna + D, recargo: R.extraNocturna + D }
+        };
+      }
+      function turno(fechaIso, salario, horasSemana, iniMin, finMin, todoExtra) {
+        var n0 = diaNum(fechaIso), reglas = reglasDelDia(n0);
+        var pactadas = !horasSemana || horasSemana >= 42 ? reglas.horasMax : Math.min(horasSemana, reglas.horasMax);
+        var vh = salario / (pactadas * 5), vm = vh / 60;
+        var fin = finMin > iniMin ? finMin : finMin + 1440;
+        var min = {}, valor = {}, adicional = 0, total = 0;
+        ORDEN_TIPOS.forEach(function (k) { min[k] = 0; valor[k] = 0; });
+        for (var m = iniMin; m < fin; m++) {
+          var n = n0 + Math.floor(m / 1440), mm = m % 1440, r = reglasDelDia(n);
+          var noc = mm >= r.inicioNoc || mm < R.finNocturna;
+          var df = diaSemana(n) === 0 || !!festivo(n);
+          var k = (todoExtra ? 'x' : '') + (df ? 'f' : '') + (noc ? 'n' : 'd');
+          if (!todoExtra && !df) k = noc ? 'on' : 'od';
+          var F = factores(r.D)[k];
+          min[k]++; valor[k] += vm * F.total; total += vm * F.total;
+          adicional += vm * (F.recargo + (!todoExtra && df && R.descansoCompleto ? 1 : 0));
+        }
+        return { vh: vh, pactadas: pactadas, min: min, valor: valor, adicional: adicional, total: total, D: reglas.D, minutos: fin - iniMin };
+      }
+      return { R: R, diaNum: diaNum, diaSemana: diaSemana, festivo: festivo, reglasDelDia: reglasDelDia, factores: factores, turno: turno, cop: cop, horas: horas, minDe: minDe, fechaLarga: fechaLarga, TIPOS: TIPOS, ORDEN_TIPOS: ORDEN_TIPOS };
+    }
+  }
+
+  renderVals() {
+    var self = this, M = this.motor(), s = this.state;
+    var set = function (k) { return function (e) { var o = {}; o[k] = e.target.value; self.setState(o); }; };
+    var activo = 'background: #FFFFFF; color: #16231F; box-shadow: 0 1px 2px rgba(22,35,31,0.12)';
+    var inactivo = 'background: transparent; color: #55625C';
+    var salario = +s.salario || 0, horasSem = +s.horas || 42;
+    var error = '';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s.fecha || '')) error = 'Escribe la fecha del turno.';
+    else if (s.fecha < '2026-01-01') error = 'La calculadora cubre turnos desde el 1 de enero de 2026, con las reglas de la reforma laboral.';
+    else if (salario <= 0) error = 'Escribe el salario mensual.';
+    else if (!s.ini || !s.fin || s.ini === s.fin) error = 'La hora de salida debe ser distinta a la de entrada.';
+    var res = null, filas = [], razones = [];
+    var colores = { od: '#A9BBB3', on: '#8D96F0', fd: '#F2B45A', fn: '#F2B45A', xd: '#F07A50', xn: '#F07A50', xfd: '#F07A50', xfn: '#F07A50' };
+    if (!error) {
+      res = M.turno(s.fecha, salario, horasSem, M.minDe(s.ini), M.minDe(s.fin), s.tipo === 'extra');
+      var F = M.factores(res.D);
+      filas = M.ORDEN_TIPOS.filter(function (k) { return res.min[k] > 0; }).map(function (k) {
+        return { nombre: M.TIPOS[k], horas: M.horas(res.min[k]), valorHora: M.cop(res.vh), factor: F[k].total.toFixed(2).replace('.', ','), valor: M.cop(res.valor[k]), color: colores[k] };
+      });
+      var n = M.diaNum(s.fecha), fest = M.festivo(n), dom = M.diaSemana(n) === 0, Dp = Math.round(res.D * 100);
+      var hayDom = res.min.fd + res.min.fn + res.min.xfd + res.min.xfn > 0;
+      var hayNoc = res.min.on + res.min.fn + res.min.xn + res.min.xfn > 0;
+      if (fest) razones.push({ color: '#E39A2B', texto: 'Es festivo (' + fest + '). Cada hora se paga completa, aparte del salario, más un recargo del ' + Dp + ' % (Ley 2466 de 2025).' });
+      else if (dom) razones.push({ color: '#E39A2B', texto: 'Es domingo. Cada hora se paga completa, aparte del salario, más un recargo del ' + Dp + ' % (Ley 2466 de 2025). Sube al 100 % el 1 de julio de 2027.' });
+      else if (hayDom) razones.push({ color: '#E39A2B', texto: 'El turno pasa la medianoche y entra a un domingo o festivo: esas horas llevan el recargo del ' + Dp + ' %.' });
+      else razones.push({ color: '#A9BBB3', texto: 'Día ordinario: sin recargo dominical. Las horas ordinarias ya están pagas con el salario.' });
+      if (hayNoc) razones.push({ color: '#3D47A8', texto: 'Entre las 7:00 p. m. y las 6:00 a. m. la hora es nocturna: recargo del 35 % (vigente desde el 25 de diciembre de 2025).' });
+      if (s.tipo === 'extra') razones.push({ color: '#D9592B', texto: 'Las horas extra se pagan completas: +25 % si son diurnas y +75 % si son nocturnas. Máximo 2 al día y 12 a la semana.' });
+      else if (res.minutos > 480) razones.push({ color: '#D9592B', texto: 'Ojo: la jornada ordinaria máxima es de 8 horas al día. Lo que pase de su jornada pactada se paga como extra.' });
+      razones.push({ color: '#0E6B57', texto: 'Valor de la hora ordinaria: ' + M.cop(res.vh) + ' = salario ÷ ' + (res.pactadas * 5) + ' (jornada de ' + res.pactadas + ' h semanales' + (res.pactadas === 44 ? ', vigente hasta el 14 de julio de 2026' : '') + ').' });
+      if (s.fecha >= '2027-01-01') razones.push({ color: '#55625C', texto: 'El salario mínimo de 2027 se fija en diciembre de 2026. Revisa el salario que escribiste.' });
+    }
+    var fechaN = error ? null : M.diaNum(s.fecha);
+    var diaTexto = fechaN === null ? '' : M.fechaLarga(fechaN);
+    return {
+      salario: s.salario, fecha: s.fecha, horas: s.horas, ini: s.ini, fin: s.fin, correo: s.correo,
+      setSalario: set('salario'), setFecha: set('fecha'), setHoras: set('horas'), setIni: set('ini'), setFin: set('fin'), setCorreo: set('correo'),
+      usarMinimo: function () { self.setState({ salario: '1750905' }); },
+      verJornada: function () { self.setState({ tipo: 'jornada' }); }, verExtra: function () { self.setState({ tipo: 'extra' }); },
+      estiloJornada: s.tipo === 'jornada' ? activo : inactivo, estiloExtra: s.tipo === 'extra' ? activo : inactivo,
+      error: error, hayError: !!error, hayResultado: !error,
+      diaTexto: diaTexto ? diaTexto.charAt(0).toUpperCase() + diaTexto.slice(1) : '', duracion: res ? M.horas(res.minutos) : '',
+      adicional: res ? M.cop(res.adicional) : '', totalHoras: res ? M.cop(res.total) : '', filas: filas, razones: razones,
+      sinCorreo: !s.enviado, conCorreo: s.enviado,
+      enviarCorreo: function () { if (/.+@.+\..+/.test(self.state.correo)) self.setState({ enviado: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

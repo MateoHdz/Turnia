@@ -1,0 +1,1227 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Turnia · App del dueño</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #F3F4EF; color: #16231F; font-family: Manrope, 'Segoe UI', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column">
+
+<sc-if value="{{ esOnboarding }}" hint-placeholder-val="{{ true }}">
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 20px 20px 24px; gap: 18px; overflow-y: auto">
+  <div style="display: flex; align-items: center; justify-content: space-between">
+    <div style="display: flex; align-items: center; gap: 8px">
+      <svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="#0E6B57"></rect><path d="M8 10h12M8 14h7M8 18h9" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="20" cy="18" r="3" fill="#F2B45A"></circle></svg>
+      <span style="font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.02em">Turnia</span>
+    </div>
+    <span style="font-size: 13px; font-weight: 700; color: #55625C">Paso {{ paso }} de 3</span>
+  </div>
+  <div style="height: 6px; border-radius: 999px; background: #DEE2DA; overflow: hidden"><div style="height: 6px; border-radius: 999px; background: #0E6B57; width: {{ pasoAncho }}"></div></div>
+
+  <sc-if value="{{ paso1 }}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <h1 style="margin: 0; font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 30px; line-height: 1.08; letter-spacing: -0.02em">Mira cuánto te cuesta el horario antes de publicarlo</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55625C">Crea tu cuenta gratis. Tienes 30 días para probar todo, sin tarjeta.</p>
+    <button onClick="{{ obSiguiente }}" disabled="{{ bloqueado }}" style="height: 52px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #16231F; font: 700 15px Manrope, sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; opacity: {{ opacidadBoton }}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 12h8M12 3a9 9 0 0 1 8 5"></path></svg>
+      Continuar con Google
+    </button>
+    <div style="display: flex; align-items: center; gap: 10px; color: #55625C; font-size: 13px"><div style="flex: 1; height: 1px; background: #DEE2DA"></div>o con tu correo<div style="flex: 1; height: 1px; background: #DEE2DA"></div></div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="ob-correo" style="font-size: 13px; font-weight: 700">Correo electrónico</label>
+      <input id="ob-correo" type="email" placeholder="nombre@negocio.com" value="{{ ob.correo }}" onChange="{{ setCorreo }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 14px; font: 500 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF">
+    </div>
+    <label for="ob-acepta" style="display: flex; gap: 12px; align-items: flex-start; font-size: 13px; line-height: 1.45; color: #34413C; padding: 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DEE2DA">
+      <input id="ob-acepta" type="checkbox" checked="{{ ob.acepta }}" onChange="{{ setAcepta }}" style="width: 20px; height: 20px; margin: 0; accent-color: #0E6B57; flex-shrink: 0">
+      <span>Acepto los términos y la política de tratamiento de datos personales (Ley 1581 de 2012). Declaro que tengo autorización de mis empleados para registrar sus datos.</span>
+    </label>
+    <button onClick="{{ obSiguiente }}" disabled="{{ bloqueado }}" style="height: 52px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 15px Manrope, sans-serif; opacity: {{ opacidadBoton }}">Enviarme un enlace de acceso</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ paso2 }}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <h1 style="margin: 0; font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 28px; line-height: 1.1; letter-spacing: -0.02em">Cuéntanos de tu negocio</h1>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="ob-negocio" style="font-size: 13px; font-weight: 700">Nombre del negocio</label>
+      <input id="ob-negocio" type="text" value="{{ ob.negocio }}" onChange="{{ setNegocio }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 14px; font: 600 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 13px; font-weight: 700">Tipo de negocio</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{ tipos }}" as="t" hint-placeholder-count="6">
+          <button onClick="{{ t.elegir }}" style="min-height: 44px; padding: 0 14px; border-radius: 999px; font: 700 14px Manrope, sans-serif; {{ t.estilo }}">{{ t.nombre }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="ob-ciudad" style="font-size: 13px; font-weight: 700">Ciudad</label>
+      <input id="ob-ciudad" type="text" value="{{ ob.ciudad }}" onChange="{{ setCiudad }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 14px; font: 600 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF">
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ paso3 }}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 14px">
+    <h1 style="margin: 0; font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 28px; line-height: 1.1; letter-spacing: -0.02em">Tu primera sede</h1>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="ob-sede" style="font-size: 13px; font-weight: 700">Nombre de la sede</label>
+      <input id="ob-sede" type="text" value="{{ ob.sede }}" onChange="{{ setSede }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 14px; font: 600 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF">
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="ob-abre" style="font-size: 13px; font-weight: 700">Abre</label>
+        <input id="ob-abre" type="time" value="{{ ob.abre }}" onChange="{{ setAbre }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 600 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="ob-cierra" style="font-size: 13px; font-weight: 700">Cierra</label>
+        <input id="ob-cierra" type="time" value="{{ ob.cierra }}" onChange="{{ setCierra }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 600 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF">
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 13px; font-weight: 700">¿Cómo reparten la jornada de {{ horasMax }} horas?</span>
+      <span style="font-size: 13px; color: #55625C; line-height: 1.45">Esto define desde qué hora del día empieza a contar como extra.</span>
+      <sc-for list="{{ modos }}" as="m" hint-placeholder-count="3">
+        <button onClick="{{ m.elegir }}" aria-pressed="{{ m.sel }}" style="display: flex; gap: 12px; align-items: flex-start; text-align: left; padding: 12px 14px; border-radius: 14px; font-family: Manrope, sans-serif; color: #16231F; {{ m.estilo }}">
+          <span style="width: 12px; height: 12px; border-radius: 999px; margin-top: 4px; flex-shrink: 0; {{ m.marca }}"></span>
+          <span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 15px; font-weight: 800">{{ m.titulo }}</span><span style="font-size: 13px; line-height: 1.4; color: #4A5751">{{ m.texto }}</span></span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ pasoMayor }}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; gap: 10px; margin-top: auto">
+    <button onClick="{{ obAtras }}" style="height: 52px; padding: 0 18px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #16231F; font: 700 15px Manrope, sans-serif">Atrás</button>
+    <button onClick="{{ obSiguiente }}" style="flex: 1; height: 52px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 15px Manrope, sans-serif">{{ textoSiguiente }}</button>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ esApp }}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column">
+  <div style="padding: 14px 16px 10px; display: flex; align-items: center; gap: 10px">
+    <svg width="34" height="34" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="#0E6B57"></rect><path d="M8 10h12M8 14h7M8 18h9" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="20" cy="18" r="3" fill="#F2B45A"></circle></svg>
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+      <span style="font-size: 12px; font-weight: 700; color: #55625C; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ negocioNombre }}</span>
+      <span style="font-size: 16px; font-weight: 800">Sede {{ sedeNombre }}</span>
+    </div>
+    <button onClick="{{ abrirAlertas }}" aria-label="{{ alertasAria }}" style="position: relative; width: 44px; height: 44px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #16231F; display: flex; align-items: center; justify-content: center">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+      <sc-if value="{{ hayAltas }}" hint-placeholder-val="{{ true }}"><span style="position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 5px; box-sizing: border-box; border-radius: 999px; background: #B4401A; color: #FFFFFF; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{ altas }}</span></sc-if>
+    </button>
+  </div>
+
+  <div style="flex: 1; min-height: 0; overflow-y: auto">
+
+  <sc-if value="{{ esHorario }}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px 20px">
+    <div style="display: flex; align-items: center; gap: 8px">
+      <button onClick="{{ semanaAnterior }}" aria-label="Semana anterior" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #16231F; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg></button>
+      <div style="flex: 1; display: flex; flex-direction: column; align-items: center">
+        <span style="font-size: 12px; font-weight: 700; color: #55625C">Semana</span>
+        <span style="font-size: 16px; font-weight: 800">{{ semanaTexto }}</span>
+      </div>
+      <button onClick="{{ semanaSiguiente }}" aria-label="Semana siguiente" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #16231F; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></button>
+    </div>
+
+    <div style="display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: #E6E9E2">
+      <button onClick="{{ verA }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloA }}">Escenario A</button>
+      <button onClick="{{ verB }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloB }}">{{ textoB }}</button>
+      <span style="align-self: center; padding: 0 8px; font-size: 12px; font-weight: 800; border-radius: 999px; {{ estadoEstilo }}">{{ estadoTexto }}</span>
+    </div>
+
+    <sc-if value="{{ semanaVacia }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; padding: 20px; border-radius: 16px; background: #FFFFFF; border: 1px dashed #A9BBB3">
+      <span style="font-size: 17px; font-weight: 800">Esta semana está vacía</span>
+      <span style="font-size: 14px; color: #55625C; line-height: 1.45">Copia la semana anterior y ajusta solo lo que cambia. Los festivos y domingos se recalculan solos.</span>
+      <button onClick="{{ copiarAnterior }}" style="min-height: 46px; padding: 0 16px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 14px Manrope, sans-serif">Copiar semana anterior</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ semanaLlena }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 18px; background: #16231F; color: #FFFFFF">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 13px; font-weight: 600; color: #C9D3CE">Costo de la semana</span>
+          <span style="font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.02em">{{ costoTotal }}</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px; text-align: right">
+          <span style="font-size: 12px; color: #C9D3CE">Recargos y extras</span>
+          <span style="font-size: 18px; font-weight: 800; color: #F6BE6B">{{ sobrecosto }}</span>
+        </div>
+      </div>
+      <div style="display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: #2C3A35; gap: 2px">
+        <sc-for list="{{ barra }}" as="b" hint-placeholder-count="4"><div style="height: 10px; width: {{ b.ancho }}; background: {{ b.color }}"></div></sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px">
+        <sc-for list="{{ leyenda }}" as="l" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #E4EAE7"><span style="width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; background: {{ l.color }}"></span><span style="flex: 1">{{ l.nombre }}</span><span style="font-weight: 800">{{ l.horas }}</span></div>
+        </sc-for>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: #C9D3CE; border-top: 1px solid #2E3D37; padding-top: 10px"><span>Salarios (fijos): {{ base }}</span><span>{{ horasTotales }} programadas</span></div>
+    </div>
+
+    <button onClick="{{ abrirAlertas }}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 14px; border-radius: 14px; border: 0; text-align: left; font: 700 14px Manrope, sans-serif; {{ franjaEstilo }}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+      <span style="flex: 1">{{ franjaTexto }}</span>
+      <span style="font-size: 13px; text-decoration: underline">Ver</span>
+    </button>
+
+    <div style="display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: #E6E9E2">
+      <button onClick="{{ verDia }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloVistaDia }}">Por día</button>
+      <button onClick="{{ verPersona }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloVistaPersona }}">Por persona</button>
+    </div>
+
+    <sc-if value="{{ vistaDia }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px">
+        <sc-for list="{{ dias }}" as="d" hint-placeholder-count="7">
+          <button onClick="{{ d.elegir }}" aria-label="{{ d.aria }}" style="height: 64px; padding: 0; border-radius: 12px; border: 1px solid; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; font-family: Manrope, sans-serif; {{ d.estilo }}">
+            <span style="font-size: 11px; font-weight: 700">{{ d.letra }}</span>
+            <span style="font-size: 18px; font-weight: 800">{{ d.num }}</span>
+            <span style="font-size: 10px; font-weight: 800; min-height: 12px; {{ d.marcaEstilo }}">{{ d.marca }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 10px">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 18px; font-weight: 800">{{ diaTitulo }}</span>
+          <span style="font-size: 13px; font-weight: 600; {{ diaSubEstilo }}">{{ diaSub }}</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0">
+          <span style="font-size: 11px; color: #55625C; font-weight: 700">Recargos y extras</span>
+          <span style="font-size: 15px; font-weight: 800">{{ costoDia }}</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA; overflow: hidden">
+        <sc-for list="{{ filasDia }}" as="f" hint-placeholder-count="8">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid #EDEFE9">
+            <span style="width: 36px; height: 36px; border-radius: 999px; background: #E3F1EC; color: #0E6B57; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0">{{ f.iniciales }}</span>
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ f.nombre }}<sc-if value="{{ f.alerta }}" hint-placeholder-val="{{ false }}"><span style="color: #B4401A"> · alerta</span></sc-if></span>
+              <sc-if value="{{ f.libre }}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #55625C">{{ f.cargo }} · descansa</span></sc-if>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px">
+                <sc-for list="{{ f.turnos }}" as="t" hint-placeholder-count="1">
+                  <button onClick="{{ t.abrir }}" aria-label="{{ t.aria }}" style="min-height: 34px; padding: 4px 10px; border-radius: 10px; display: flex; flex-direction: column; align-items: flex-start; font-family: Manrope, sans-serif; {{ t.estilo }}">
+                    <span style="font-size: 13px; font-weight: 800">{{ t.texto }}</span>
+                    <span style="font-size: 11px; font-weight: 700">{{ t.costo }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+            <button onClick="{{ f.agregar }}" aria-label="{{ f.agregarAria }}" style="width: 40px; height: 40px; border-radius: 12px; border: 1px solid #DEE2DA; background: #F7F8F4; color: #0E6B57; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{ abrirCubrirDia }}" style="min-height: 48px; border-radius: 14px; border: 1px dashed #0E6B57; background: #E3F1EC; color: #0E6B57; font: 800 14px Manrope, sans-serif">+ Agregar turno y ver quién sale más barato</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ vistaPersona }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; padding: 0 12px">
+        <sc-for list="{{ dias }}" as="d" hint-placeholder-count="7"><span style="text-align: center; font-size: 11px; font-weight: 800; color: #55625C">{{ d.letra }} {{ d.num }}</span></sc-for>
+      </div>
+      <sc-for list="{{ filasPersona }}" as="p" hint-placeholder-count="8">
+        <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px">
+            <div style="display: flex; flex-direction: column; min-width: 0">
+              <span style="font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ p.nombre }}</span>
+              <span style="font-size: 12px; color: #55625C">{{ p.horasTexto }}</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0">
+              <span style="font-size: 14px; font-weight: 800">{{ p.costo }}</span>
+              <span style="font-size: 11px; color: #55625C">{{ p.costoTexto }}</span>
+            </div>
+          </div>
+          <div style="height: 6px; border-radius: 999px; background: #EDEFE9; overflow: hidden"><div style="height: 6px; border-radius: 999px; width: {{ p.ancho }}; background: {{ p.barraColor }}"></div></div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+            <sc-for list="{{ p.celdas }}" as="c" hint-placeholder-count="7">
+              <button onClick="{{ c.abrir }}" aria-label="{{ c.aria }}" style="height: 40px; padding: 0; border-radius: 9px; font: 800 11px Manrope, sans-serif; {{ c.estilo }}">{{ c.texto }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ p.hayAlerta }}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; font-weight: 700; color: #9E3714; line-height: 1.4">{{ p.alerta }}</span></sc-if>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <button onClick="{{ publicar }}" style="min-height: 52px; border-radius: 14px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 15px Manrope, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"></path></svg>{{ textoPublicar }}</button>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ esEquipo }}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px 20px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <div style="display: flex; flex-direction: column"><span style="font-size: 22px; font-weight: 800">Equipo</span><span style="font-size: 13px; color: #55625C">{{ equipoTexto }}</span></div>
+      <button onClick="{{ nuevoEmpleado }}" style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 14px Manrope, sans-serif">+ Agregar</button>
+    </div>
+    <div style="display: flex; gap: 10px; padding: 12px; border-radius: 14px; background: #E8EAFA; color: #2E3790; font-size: 13px; line-height: 1.45">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink: 0"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5h.01"></path></svg>
+      <span>{{ notaValorHora }}</span>
+    </div>
+    <sc-for list="{{ equipo }}" as="e" hint-placeholder-count="8">
+      <button onClick="{{ e.editar }}" style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA; text-align: left; font-family: Manrope, sans-serif; color: #16231F">
+        <span style="width: 42px; height: 42px; border-radius: 999px; background: #E3F1EC; color: #0E6B57; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0">{{ e.iniciales }}</span>
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 15px; font-weight: 800">{{ e.nombre }}</span>
+          <span style="font-size: 12px; color: #55625C">{{ e.cargo }} · {{ e.jornada }}</span>
+          <span style="font-size: 12px; color: #34413C; font-weight: 600">{{ e.detalle }}</span>
+        </span>
+        <span style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0">
+          <span style="font-size: 15px; font-weight: 800">{{ e.valorHora }}</span>
+          <span style="font-size: 11px; color: #55625C">hora ordinaria</span>
+        </span>
+      </button>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ esEscenarios }}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px 20px">
+    <div style="display: flex; flex-direction: column"><span style="font-size: 22px; font-weight: 800">Escenarios</span><span style="font-size: 13px; color: #55625C">Semana del {{ semanaTexto }}</span></div>
+    <sc-if value="{{ sinB }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 16px; background: #FFFFFF; border: 1px dashed #A9BBB3">
+      <span style="font-size: 17px; font-weight: 800">Prueba otra forma de armar la semana</span>
+      <span style="font-size: 14px; color: #55625C; line-height: 1.45">Duplica tu horario como escenario B, cámbialo y compara cuánto cuesta cada uno antes de publicar.</span>
+      <button onClick="{{ crearB }}" style="min-height: 46px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 14px Manrope, sans-serif">Crear escenario B</button>
+    </div>
+    </sc-if>
+    <sc-if value="{{ tieneB }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 6px; padding: 16px; border-radius: 18px; {{ conclusionEstilo }}">
+      <span style="font-size: 13px; font-weight: 700">A: tu horario actual · B: {{ nombreB }}</span>
+      <span style="font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 24px; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em">{{ conclusion }}</span>
+      <sc-if value="{{ hayAdvertencia }}" hint-placeholder-val="{{ true }}"><span style="font-size: 13px; line-height: 1.45; font-weight: 600">{{ advertencia }}</span></sc-if>
+    </div>
+    <div style="border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA; overflow: hidden">
+      <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 0.9fr; gap: 6px; padding: 10px 12px; background: #F7F8F4; font-size: 11px; font-weight: 800; color: #55625C"><span></span><span style="text-align: right">A</span><span style="text-align: right">B</span><span style="text-align: right">B − A</span></div>
+      <sc-for list="{{ filasComp }}" as="r" hint-placeholder-count="6">
+        <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 0.9fr; gap: 6px; padding: 10px 12px; border-top: 1px solid #EDEFE9; font-size: 12px; align-items: center">
+          <span style="font-weight: 700">{{ r.etiqueta }}</span>
+          <span style="text-align: right; font-weight: 600">{{ r.a }}</span>
+          <span style="text-align: right; font-weight: 600">{{ r.b }}</span>
+          <span style="text-align: right; font-weight: 800; {{ r.difEstilo }}">{{ r.dif }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA">
+      <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px; font-weight: 800">Horas programadas por día</span><span style="display: flex; gap: 10px; font-size: 11px; font-weight: 700; color: #55625C"><span style="display: flex; align-items: center; gap: 4px"><span style="width: 9px; height: 9px; border-radius: 2px; background: #A9BBB3"></span>A</span><span style="display: flex; align-items: center; gap: 4px"><span style="width: 9px; height: 9px; border-radius: 2px; background: #0E6B57"></span>B</span></span></div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; align-items: end; height: 110px">
+        <sc-for list="{{ coberturaDias }}" as="c" hint-placeholder-count="7">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 4px">
+            <div style="display: flex; gap: 2px; align-items: flex-end; height: 80px"><div style="width: 12px; border-radius: 3px 3px 0 0; background: #A9BBB3; height: {{ c.altoA }}"></div><div style="width: 12px; border-radius: 3px 3px 0 0; background: #0E6B57; height: {{ c.altoB }}"></div></div>
+            <span style="font-size: 11px; font-weight: 800; color: #55625C">{{ c.letra }}</span>
+            <span style="font-size: 10px; color: #55625C">{{ c.texto }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px">
+      <button onClick="{{ editarB }}" style="flex: 1; min-height: 48px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #16231F; font: 800 14px Manrope, sans-serif">Editar B</button>
+      <button onClick="{{ usarB }}" style="flex: 1.3; min-height: 48px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 14px Manrope, sans-serif">Usar B como horario</button>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ esPublicar }}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px 20px">
+    <div style="display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 16px; background: #E3F1EC; color: #0B5546">
+      <span style="width: 40px; height: 40px; border-radius: 999px; background: #0E6B57; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg></span>
+      <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 800">Horario publicado</span><span style="font-size: 13px">Semana del {{ semanaTexto }} · {{ enviadosTexto }}</span></span>
+    </div>
+    <span style="font-size: 14px; color: #34413C; line-height: 1.45">Envía a cada persona su horario por WhatsApp. Le llega un mensaje con sus turnos y un enlace para verlo, sin crear cuenta.</span>
+    <sc-for list="{{ listaPublicar }}" as="p" hint-placeholder-count="8">
+      <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: #FFFFFF; border: 1px solid #DEE2DA">
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 800">{{ p.nombre }}</span><span style="font-size: 12px; color: #55625C">{{ p.resumen }}</span></span>
+        <sc-if value="{{ p.pendiente }}" hint-placeholder-val="{{ true }}"><button onClick="{{ p.abrir }}" style="min-height: 42px; padding: 0 12px; border-radius: 10px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 13px Manrope, sans-serif">Enviar por WhatsApp</button></sc-if>
+        <sc-if value="{{ p.enviado }}" hint-placeholder-val="{{ false }}"><span style="min-height: 42px; padding: 0 12px; border-radius: 10px; background: #E3F1EC; color: #0B5546; font-size: 13px; font-weight: 800; display: flex; align-items: center">Enviado</span></sc-if>
+      </div>
+    </sc-for>
+    <a href="VistaEmpleado.dc.html" style="min-height: 48px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #0E6B57; font: 800 14px Manrope, sans-serif; display: flex; align-items: center; justify-content: center; text-decoration: none">Ver cómo lo ve un empleado</a>
+    <button onClick="{{ exportar }}" style="min-height: 48px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #16231F; font: 800 14px Manrope, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Exportar novedades y registro de horas extra</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ esCuenta }}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px 20px">
+    <span style="font-size: 22px; font-weight: 800">Cuenta</span>
+    <div style="display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: 18px; background: #16231F; color: #FFFFFF">
+      <span style="font-size: 13px; color: #C9D3CE; font-weight: 600">Prueba gratis</span>
+      <span style="font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 26px; font-weight: 700">Te quedan 30 días</span>
+      <span style="font-size: 13px; color: #C9D3CE">Vence el 12 de noviembre de 2026. Después, la sede queda en solo lectura hasta que actives tu plan.</span>
+    </div>
+    <span style="font-size: 15px; font-weight: 800; margin-top: 4px">Planes por sede, al mes</span>
+    <sc-for list="{{ planes }}" as="p" hint-placeholder-count="3">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 16px; background: #FFFFFF; {{ p.estilo }}">
+        <span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 800">{{ p.nombre }}</span><span style="font-size: 12px; color: #55625C">{{ p.detalle }}</span></span>
+        <span style="display: flex; flex-direction: column; align-items: flex-end"><span style="font-size: 17px; font-weight: 800">{{ p.precio }}</span><sc-if value="{{ p.actual }}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; font-weight: 800; color: #0E6B57">Tu plan</span></sc-if></span>
+      </div>
+    </sc-for>
+    <div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA">
+      <span style="font-size: 15px; font-weight: 800">Cómo pagar</span>
+      <span style="font-size: 13px; line-height: 1.5; color: #34413C">{{ textoPago }}</span>
+      <button onClick="{{ pagar }}" style="min-height: 46px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 14px Manrope, sans-serif">Ya pagué: enviar comprobante</button>
+    </div>
+    <div style="display: flex; flex-direction: column; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA; overflow: hidden">
+      <sc-for list="{{ ajustes }}" as="a" hint-placeholder-count="4">
+        <button onClick="{{ a.abrir }}" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 8px 14px; border: 0; border-bottom: 1px solid #EDEFE9; background: #FFFFFF; text-align: left; font-family: Manrope, sans-serif; color: #16231F">
+          <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 800">{{ a.titulo }}</span><span style="font-size: 12px; color: #55625C">{{ a.detalle }}</span></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#55625C" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
+        </button>
+      </sc-for>
+    </div>
+    <span style="font-size: 12px; color: #55625C; line-height: 1.5">Los cálculos son una estimación basada en la normativa vigente y no reemplazan la asesoría de un contador.</span>
+  </div>
+  </sc-if>
+
+  </div>
+
+  <nav aria-label="Secciones" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 6px 8px 14px; background: #FFFFFF; border-top: 1px solid #DEE2DA">
+    <button onClick="{{ irHorario }}" style="min-height: 52px; border: 0; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 700 11px Manrope, sans-serif; {{ navHorario }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Horario</button>
+    <button onClick="{{ irEquipo }}" style="min-height: 52px; border: 0; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 700 11px Manrope, sans-serif; {{ navEquipo }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5M16 4.8a3.5 3.5 0 0 1 0 6.4M18.5 14.8c1.7.8 2.7 2.6 3 5.2"></path></svg>Equipo</button>
+    <button onClick="{{ irEscenarios }}" style="min-height: 52px; border: 0; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 700 11px Manrope, sans-serif; {{ navEscenarios }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M11 20V4M17 20v-7M2 20h20"></path></svg>Escenarios</button>
+    <button onClick="{{ irCuenta }}" style="min-height: 52px; border: 0; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 700 11px Manrope, sans-serif; {{ navCuenta }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1-4 4-6 8-6s7 2 8 6"></path></svg>Cuenta</button>
+  </nav>
+</div>
+</sc-if>
+
+<sc-if value="{{ hayHoja }}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 20; display: flex; flex-direction: column; background: rgba(22, 35, 31, 0.5)">
+  <button onClick="{{ cerrarHoja }}" aria-label="Cerrar" style="flex: 1; min-height: 60px; border: 0; background: transparent"></button>
+  <div style="max-height: 82%; overflow-y: auto; background: #FFFFFF; border-radius: 22px 22px 0 0; padding: 10px 16px 22px; display: flex; flex-direction: column; gap: 14px">
+    <div style="width: 40px; height: 5px; border-radius: 999px; background: #DEE2DA; align-self: center"></div>
+
+    <sc-if value="{{ hojaCubrir }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 19px; font-weight: 800">¿Quién cubre este turno?</span><span style="font-size: 13px; color: #55625C">{{ cubrirFecha }}</span></div>
+      <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px">
+        <sc-for list="{{ cubrirPlantillas }}" as="p" hint-placeholder-count="5">
+          <button onClick="{{ p.elegir }}" style="flex-shrink: 0; min-height: 50px; padding: 6px 12px; border-radius: 12px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; font-family: Manrope, sans-serif; {{ p.estilo }}"><span style="font-size: 13px; font-weight: 800">{{ p.nombre }}</span><span style="font-size: 11px; font-weight: 600">{{ p.horario }}</span></button>
+        </sc-for>
+      </div>
+      <span style="font-size: 13px; font-weight: 700; color: #0B5546; background: #E3F1EC; padding: 10px 12px; border-radius: 12px; line-height: 1.4">{{ cubrirConsejo }}</span>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <sc-for list="{{ cubrirLista }}" as="c" hint-placeholder-count="6">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; {{ c.filaEstilo }}">
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 14px; font-weight: 800">{{ c.nombre }}</span>
+              <span style="font-size: 12px; font-weight: 700; line-height: 1.35; {{ c.notaEstilo }}">{{ c.nota }}</span>
+            </span>
+            <span style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0">
+              <span style="font-size: 15px; font-weight: 800">{{ c.delta }}</span>
+              <sc-if value="{{ c.puede }}" hint-placeholder-val="{{ true }}"><button onClick="{{ c.asignar }}" aria-label="{{ c.aria }}" style="min-height: 36px; padding: 0 12px; border-radius: 10px; border: 0; background: #16231F; color: #FFFFFF; font: 800 12px Manrope, sans-serif">Asignar</button></sc-if>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ hojaTurno }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 19px; font-weight: 800">{{ turnoNombre }}</span><span style="font-size: 13px; color: #55625C">{{ turnoFecha }}</span></div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="t-ini" style="font-size: 13px; font-weight: 700">Entra</label><input id="t-ini" type="time" value="{{ turnoIni }}" onChange="{{ setTurnoIni }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 700 16px Manrope, sans-serif; color: #16231F; background: #FFFFFF"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="t-fin" style="font-size: 13px; font-weight: 700">Sale</label><input id="t-fin" type="time" value="{{ turnoFin }}" onChange="{{ setTurnoFin }}" style="height: 48px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 700 16px Manrope, sans-serif; color: #16231F; background: #FFFFFF"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 14px; border-radius: 14px; background: #16231F; color: #FFFFFF">
+        <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; color: #C9D3CE">{{ turnoEtiqueta }}</span><span style="font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 28px; font-weight: 700">{{ turnoCosto }}</span></span>
+        <span style="font-size: 12px; color: #C9D3CE; text-align: right; max-width: 150px; line-height: 1.35">{{ turnoBaseTexto }}</span>
+      </div>
+      <div style="display: flex; flex-direction: column; border-radius: 14px; border: 1px solid #DEE2DA; overflow: hidden">
+        <sc-for list="{{ turnoFilas }}" as="f" hint-placeholder-count="3">
+          <div style="display: grid; grid-template-columns: 12px 1fr auto auto; gap: 10px; align-items: center; padding: 10px 12px; border-bottom: 1px solid #EDEFE9; font-size: 13px">
+            <span style="width: 10px; height: 10px; border-radius: 3px; background: {{ f.color }}"></span>
+            <span style="display: flex; flex-direction: column"><span style="font-weight: 800">{{ f.nombre }}</span><span style="font-size: 12px; color: #55625C">{{ f.horas }} · factor {{ f.factor }}</span></span>
+            <span style="font-size: 12px; color: #55625C; text-align: right">{{ f.concepto }}</span>
+            <span style="font-weight: 800; text-align: right; min-width: 72px">{{ f.monto }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <sc-for list="{{ turnoNotas }}" as="n" hint-placeholder-count="3"><span style="font-size: 13px; line-height: 1.45; color: #34413C; padding-left: 12px; border-left: 3px solid #DEE2DA">{{ n.texto }}</span></sc-for>
+      </div>
+      <div style="display: flex; gap: 10px">
+        <button onClick="{{ eliminarTurno }}" style="min-height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid #F1C3B1; background: #FFFFFF; color: #9E3714; font: 800 14px Manrope, sans-serif">Eliminar</button>
+        <button onClick="{{ cerrarHoja }}" style="flex: 1; min-height: 48px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 14px Manrope, sans-serif">Listo</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ hojaEmpleado }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <span style="font-size: 19px; font-weight: 800">{{ formTitulo }}</span>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="f-nombre" style="font-size: 13px; font-weight: 700">Nombre completo</label><input id="f-nombre" type="text" value="{{ form.nombre }}" onChange="{{ setFNombre }}" style="height: 46px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 600 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF"></div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="f-cargo" style="font-size: 13px; font-weight: 700">Cargo</label><input id="f-cargo" type="text" value="{{ form.cargo }}" onChange="{{ setFCargo }}" style="height: 46px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 600 14px Manrope, sans-serif; color: #16231F; background: #FFFFFF; min-width: 0"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="f-tel" style="font-size: 13px; font-weight: 700">Celular</label><input id="f-tel" type="tel" value="{{ form.telefono }}" onChange="{{ setFTelefono }}" style="height: 46px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 600 14px Manrope, sans-serif; color: #16231F; background: #FFFFFF; min-width: 0"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 13px; font-weight: 700">Cómo se le paga</span>
+        <div style="display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: #E6E9E2">
+          <button onClick="{{ pagoMensual }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloPagoMensual }}">Salario mensual</button>
+          <button onClick="{{ pagoHora }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloPagoHora }}">Por horas</button>
+        </div>
+      </div>
+      <sc-if value="{{ formMensual }}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="f-salario" style="font-size: 13px; font-weight: 700">Salario mensual (COP)</label>
+        <div style="display: flex; gap: 8px"><input id="f-salario" type="number" inputmode="numeric" value="{{ form.salario }}" onChange="{{ setFSalario }}" style="flex: 1; min-width: 0; height: 46px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 700 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF"><button onClick="{{ usarMinimo }}" style="min-height: 46px; padding: 0 10px; border-radius: 12px; border: 1px solid #DEE2DA; background: #F7F8F4; color: #0E6B57; font: 800 12px Manrope, sans-serif">Salario mínimo</button></div>
+      </div>
+      </sc-if>
+      <sc-if value="{{ formHora }}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="f-vh" style="font-size: 13px; font-weight: 700">Valor de la hora (COP)</label><input id="f-vh" type="number" inputmode="numeric" value="{{ form.valorHora }}" onChange="{{ setFValorHora }}" style="height: 46px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 700 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF"></div>
+      </sc-if>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 13px; font-weight: 700">Jornada pactada</span>
+        <div style="display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: #E6E9E2">
+          <button onClick="{{ jornadaCompleta }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloCompleta }}">Tiempo completo</button>
+          <button onClick="{{ jornadaParcial }}" style="flex: 1; min-height: 40px; border-radius: 9px; border: 0; font: 800 13px Manrope, sans-serif; {{ estiloParcial }}">Tiempo parcial</button>
+        </div>
+      </div>
+      <sc-if value="{{ formParcial }}" hint-placeholder-val="{{ false }}">
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="f-horas" style="font-size: 13px; font-weight: 700">Horas por semana</label><input id="f-horas" type="number" value="{{ form.horas }}" onChange="{{ setFHoras }}" style="height: 46px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 700 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF; min-width: 0"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="f-dias" style="font-size: 13px; font-weight: 700">Días por semana</label><input id="f-dias" type="number" value="{{ form.dias }}" onChange="{{ setFDias }}" style="height: 46px; border-radius: 12px; border: 1px solid #C9D0C6; padding: 0 12px; font: 700 15px Manrope, sans-serif; color: #16231F; background: #FFFFFF; min-width: 0"></div>
+      </div>
+      </sc-if>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 13px; font-weight: 700">Día de descanso</span>
+        <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+          <sc-for list="{{ descansoOpciones }}" as="o" hint-placeholder-count="7"><button onClick="{{ o.elegir }}" aria-label="{{ o.aria }}" aria-pressed="{{ o.sel }}" style="height: 40px; padding: 0; border-radius: 10px; font: 800 13px Manrope, sans-serif; {{ o.estilo }}">{{ o.letra }}</button></sc-for>
+        </div>
+        <span style="font-size: 12px; color: #55625C; line-height: 1.4">{{ descansoNota }}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-radius: 12px; background: #F3F4EF"><span style="font-size: 13px; font-weight: 700; color: #34413C">{{ formValorTexto }}</span><span style="font-size: 17px; font-weight: 800">{{ formValorHora }}</span></div>
+      <sc-if value="{{ hayFormAviso }}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; font-weight: 700; color: #9E3714; background: #FBE7DF; padding: 10px 12px; border-radius: 12px; line-height: 1.4">{{ formAviso }}</span></sc-if>
+      <button onClick="{{ guardarEmpleado }}" style="min-height: 50px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 15px Manrope, sans-serif">Guardar</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ hojaAlertas }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 19px; font-weight: 800">Alertas de la semana</span><span style="font-size: 13px; color: #55625C">{{ semanaTexto }} · escenario {{ escenario }}</span></div>
+      <sc-if value="{{ sinAlertas }}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; font-weight: 700; color: #0B5546; background: #E3F1EC; padding: 12px; border-radius: 12px">Todo en orden: no hay alertas para esta semana.</span></sc-if>
+      <sc-for list="{{ alertas }}" as="a" hint-placeholder-count="5">
+        <div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px; border-radius: 14px; {{ a.estilo }}">
+          <span style="font-size: 11px; font-weight: 800; padding: 3px 7px; border-radius: 999px; flex-shrink: 0; {{ a.chipEstilo }}">{{ a.etiqueta }}</span>
+          <span style="font-size: 13px; font-weight: 600; line-height: 1.45">{{ a.texto }}</span>
+        </div>
+      </sc-for>
+      <span style="font-size: 12px; color: #55625C; line-height: 1.5">Límites que revisa Turnia: máximo 2 horas extra al día y 12 a la semana, un día de descanso a la semana y la jornada pactada de cada persona. Desde la Ley 2466 de 2025 las horas extra no necesitan permiso del Ministerio del Trabajo, pero debes llevar un registro: Turnia lo genera al exportar.</span>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ hojaMensaje }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 19px; font-weight: 800">Mensaje para {{ mensajeNombre }}</span><span style="font-size: 13px; color: #55625C">Se abre WhatsApp con este texto listo. Tú decides cuándo enviarlo.</span></div>
+      <div style="padding: 14px; border-radius: 16px 16px 16px 4px; background: #E3F1EC; color: #16231F; font-size: 14px; line-height: 1.5; white-space: pre-line">{{ mensajeTexto }}</div>
+      <button onClick="{{ enviarMensaje }}" style="min-height: 50px; border-radius: 12px; border: 0; background: #0E6B57; color: #FFFFFF; font: 800 15px Manrope, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"></path></svg>Abrir WhatsApp</button>
+    </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hayToast }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 84px; z-index: 30; padding: 12px 14px; border-radius: 12px; background: #16231F; color: #FFFFFF; font-size: 13px; font-weight: 700; line-height: 1.4">{{ toast }}</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"pantalla":{"editor":"enum","options":["onboarding","equipo","horario","escenarios","publicar","cuenta"],"default":"onboarding"},"vista":{"editor":"enum","options":["dia","persona"],"default":"dia"},"hoja":{"editor":"enum","options":["ninguna","cubrir","turno","mensaje"],"default":"ninguna"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pantalla: null, vista: null, hoja: undefined, paso: 1,
+      ob: { correo: '', acepta: false, negocio: 'Sazón del Pacífico', tipo: 'Restaurante', ciudad: 'Cali', sede: 'San Fernando', abre: '07:00', cierra: '23:00', modo: 'fija6' },
+      negocio: 'Sazón del Pacífico',
+      sede: { nombre: 'San Fernando', abre: '07:00', cierra: '23:00', modo: 'fija6' },
+      empleados: this.semillaEmpleados(),
+      semanas: { 0: { A: this.semillaA(), B: this.semillaB(), nombreB: 'turnos de 7 horas' } },
+      semana: 0, escenario: 'A', dia: 6, publicado: {}, enviados: {}, toast: '', sec: 1
+    };
+  }
+
+  motor() {
+    if (!this._motor) this._motor = crear();
+    return this._motor;
+    function crear() {
+      var R = {
+        fechaMinima: '2026-01-01',
+        jornadaMaxima: [{ desde: '2025-07-15', horas: 44 }, { desde: '2026-07-15', horas: 42 }],
+        inicioNocturna: [{ desde: '2025-12-25', minuto: 1140 }],
+        finNocturna: 360,
+        dominical: [{ desde: '2025-07-01', recargo: 0.8 }, { desde: '2026-07-01', recargo: 0.9 }, { desde: '2027-07-01', recargo: 1 }],
+        recargoNocturno: 0.35, extraDiurna: 1.25, extraNocturna: 1.75,
+        maxExtrasDia: 120, maxExtrasSemana: 720, maxDiaFlexible: 540,
+        descansoCompleto: true, salarioMinimo: { 2026: 1750905 }
+      };
+      var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+      var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      function pad(x) { return (x < 10 ? '0' : '') + x; }
+      function diaNum(iso) { var p = iso.split('-'); return Math.round(Date.UTC(+p[0], +p[1] - 1, +p[2]) / 86400000); }
+      function fechaDe(n) { return new Date(n * 86400000); }
+      function isoDe(n) { var d = fechaDe(n); return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()); }
+      function diaSemana(n) { return ((n + 4) % 7 + 7) % 7; }
+      function preparar(lista) { return lista.map(function (x) { var y = Object.assign({}, x); y.n = diaNum(x.desde); return y; }); }
+      var jornadas = preparar(R.jornadaMaxima), nocturnas = preparar(R.inicioNocturna), dominicales = preparar(R.dominical);
+      function vigente(lista, n) { var r = lista[0]; for (var i = 0; i < lista.length; i++) { if (lista[i].n <= n) r = lista[i]; } return r; }
+      var cacheReglas = {};
+      function reglasDelDia(n) {
+        if (!cacheReglas[n]) cacheReglas[n] = { horasMax: vigente(jornadas, n).horas, D: vigente(dominicales, n).recargo, inicioNoc: vigente(nocturnas, n).minuto };
+        return cacheReglas[n];
+      }
+      function pascua(y) {
+        var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4;
+        var f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+        var i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+        var mes = Math.floor((h + l - 7 * m + 114) / 31), dia = ((h + l - 7 * m + 114) % 31) + 1;
+        return diaNum(y + '-' + pad(mes) + '-' + pad(dia));
+      }
+      function lunesSiguiente(n) { var d = diaSemana(n); return d === 1 ? n : n + ((8 - d) % 7); }
+      var cacheFestivos = {};
+      function festivosDe(y) {
+        if (cacheFestivos[y]) return cacheFestivos[y];
+        var f = {};
+        function poner(n, nombre) { f[n] = f[n] ? f[n] + ' y ' + nombre : nombre; }
+        function fijo(m, d, nombre) { poner(diaNum(y + '-' + pad(m) + '-' + pad(d)), nombre); }
+        function lunes(m, d, nombre) { poner(lunesSiguiente(diaNum(y + '-' + pad(m) + '-' + pad(d))), nombre); }
+        fijo(1, 1, 'Año Nuevo'); lunes(1, 6, 'Reyes Magos'); lunes(3, 19, 'San José');
+        fijo(5, 1, 'Día del Trabajo'); lunes(6, 29, 'San Pedro y San Pablo'); fijo(7, 20, 'Día de la Independencia');
+        fijo(8, 7, 'Batalla de Boyacá'); lunes(8, 15, 'Asunción de la Virgen'); lunes(10, 12, 'Día de la Raza');
+        lunes(11, 1, 'Todos los Santos'); lunes(11, 11, 'Independencia de Cartagena'); fijo(12, 8, 'Inmaculada Concepción');
+        fijo(12, 25, 'Navidad');
+        if (y >= 2026) lunes(7, 9, 'Virgen de Chiquinquirá');
+        var p = pascua(y);
+        poner(p - 3, 'Jueves Santo'); poner(p - 2, 'Viernes Santo');
+        poner(lunesSiguiente(p + 39), 'Ascensión del Señor'); poner(lunesSiguiente(p + 60), 'Corpus Christi'); poner(lunesSiguiente(p + 68), 'Sagrado Corazón');
+        cacheFestivos[y] = f;
+        return f;
+      }
+      function festivo(n) { return festivosDe(fechaDe(n).getUTCFullYear())[n] || null; }
+      function cop(x) { var v = Math.round(x), s = String(Math.abs(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); return (v < 0 ? '-$ ' : '$ ') + s; }
+      function horas(min) { var h = Math.floor(min / 60), m = Math.round(min % 60); if (m === 60) { h++; m = 0; } return m ? (h ? h + ' h ' + m + ' min' : m + ' min') : h + ' h'; }
+      function hhmm(min) { var x = ((min % 1440) + 1440) % 1440; return pad(Math.floor(x / 60)) + ':' + pad(x % 60); }
+      function minDe(s) { var p = String(s || '0:0').split(':'); return (+p[0]) * 60 + (+p[1] || 0); }
+      function fechaLarga(n) { var d = fechaDe(n); return DIAS[diaSemana(n)] + ' ' + d.getUTCDate() + ' de ' + MESES[d.getUTCMonth()]; }
+      function fechaCorta(n) { var d = fechaDe(n); return d.getUTCDate() + ' ' + MESES[d.getUTCMonth()].slice(0, 3); }
+      var TIPOS = {
+        od: { nombre: 'Ordinaria diurna' }, on: { nombre: 'Ordinaria nocturna' },
+        fd: { nombre: 'Dominical o festiva diurna' }, fn: { nombre: 'Dominical o festiva nocturna' },
+        xd: { nombre: 'Extra diurna' }, xn: { nombre: 'Extra nocturna' },
+        xfd: { nombre: 'Extra dominical o festiva diurna' }, xfn: { nombre: 'Extra dominical o festiva nocturna' }
+      };
+      var ORDEN_TIPOS = ['od', 'on', 'fd', 'fn', 'xd', 'xn', 'xfd', 'xfn'];
+      function ceros() { var o = {}; ORDEN_TIPOS.forEach(function (k) { o[k] = 0; }); return o; }
+      var cacheFactores = {};
+      function factores(D) {
+        if (cacheFactores[D]) return cacheFactores[D];
+        return cacheFactores[D] = {
+          od: { total: 1, recargo: 0 }, on: { total: 1 + R.recargoNocturno, recargo: R.recargoNocturno },
+          fd: { total: 1 + D, recargo: D }, fn: { total: 1 + D + R.recargoNocturno, recargo: D + R.recargoNocturno },
+          xd: { total: R.extraDiurna, recargo: R.extraDiurna }, xn: { total: R.extraNocturna, recargo: R.extraNocturna },
+          xfd: { total: R.extraDiurna + D, recargo: R.extraDiurna + D }, xfn: { total: R.extraNocturna + D, recargo: R.extraNocturna + D }
+        };
+      }
+      function pactadas(emp, n) { var max = reglasDelDia(n).horasMax; return emp.jornada === 'completa' ? max : Math.min(+emp.jornada, max); }
+      function valorHora(emp, n) { return emp.pago === 'hora' ? +emp.valorHora : +emp.salario / (pactadas(emp, n) * 5); }
+      function finReal(t) { return t.fin > t.ini ? t.fin : t.fin + 1440; }
+      function calcularSemana(lunesIso, emp, turnos, sede, opciones) {
+        opciones = opciones || {};
+        var lunes = diaNum(lunesIso);
+        var h = pactadas(emp, lunes), dias = +emp.dias || 6;
+        var topeSemana = opciones.todoExtra ? 0 : (opciones.sinTopes ? Infinity : h * 60);
+        var topeDia = opciones.todoExtra ? 0 : (opciones.sinTopes ? Infinity : (sede && sede.modo === 'flexible' ? R.maxDiaFlexible : Math.round(h * 60 / dias)));
+        var vh = valorHora(emp, lunes), vm = vh / 60;
+        var descanso = emp.descanso === undefined || emp.descanso === null ? 0 : +emp.descanso;
+        var pagaDescanso = emp.pago !== 'hora' && R.descansoCompleto ? 1 : 0;
+        var orden = turnos.slice().sort(function (a, b) { return (a.dia * 1440 + a.ini) - (b.dia * 1440 + b.ini); });
+        var ordDia = [0, 0, 0, 0, 0, 0, 0], extraDia = [0, 0, 0, 0, 0, 0, 0], extraDiario = [0, 0, 0, 0, 0, 0, 0], ordSemana = 0;
+        var min = ceros(), dinero = ceros(), recargos = 0, extras = 0, baseVariable = 0;
+        var porTurno = {}, diasTrab = {}, domFest = {};
+        orden.forEach(function (t) {
+          var ini = t.dia * 1440 + t.ini, fin = t.dia * 1440 + finReal(t);
+          var pt = { dia: t.dia, emp: t.emp, min: ceros(), dinero: ceros(), recargos: 0, extras: 0, base: 0, extraMin: 0, total: 0 };
+          porTurno[t.id] = pt;
+          diasTrab[t.dia] = true;
+          for (var m = ini; m < fin; m++) {
+            var n = lunes + Math.floor(m / 1440), mm = m % 1440;
+            var r = reglasDelDia(n);
+            var noc = mm >= r.inicioNoc || mm < R.finNocturna;
+            var df = diaSemana(n) === descanso || !!festivo(n);
+            var porDia = !(ordDia[t.dia] < topeDia), esExtra = porDia || !(ordSemana < topeSemana);
+            if (esExtra) { extraDia[t.dia]++; pt.extraMin++; if (porDia) extraDiario[t.dia]++; } else { ordDia[t.dia]++; ordSemana++; }
+            var k = (esExtra ? 'x' : '') + (df ? 'f' : '') + (noc ? 'n' : 'd');
+            if (!esExtra && !df) k = noc ? 'on' : 'od';
+            var fac = factores(r.D)[k];
+            var completa = !esExtra && df ? pagaDescanso : 0;
+            var monto = vm * (fac.recargo + completa);
+            min[k]++; pt.min[k]++; dinero[k] += monto; pt.dinero[k] += monto;
+            if (esExtra) { extras += monto; pt.extras += monto; }
+            else {
+              recargos += monto; pt.recargos += monto;
+              if (!completa) pt.base += vm;
+              if (emp.pago === 'hora') baseVariable += vm;
+            }
+            if (df) domFest[n] = true;
+          }
+          pt.total = (emp.pago === 'hora' ? pt.base : 0) + pt.recargos + pt.extras;
+        });
+        var extrasMin = extraDia.reduce(function (a, b) { return a + b; }, 0);
+        var base = emp.pago === 'hora' ? baseVariable : (+emp.salario) * 7 / 30;
+        var res = {
+          empleadoId: emp.id, valorHora: vh, horasPactadas: h, topeDia: topeDia, topeSemana: topeSemana,
+          minutos: min, dinero: dinero, totalMin: ordSemana + extrasMin, ordMin: ordSemana, extrasMin: extrasMin, extraDia: extraDia,
+          diasTrabajados: Object.keys(diasTrab).length, domFest: Object.keys(domFest).length,
+          base: Math.round(base), recargos: Math.round(recargos), extras: Math.round(extras), porTurno: porTurno,
+          sinUsarMin: emp.pago === 'hora' || !turnos.length ? 0 : Math.max(0, h * 60 - ordSemana)
+        };
+        res.sobrecosto = res.recargos + res.extras;
+        res.total = res.base + res.sobrecosto;
+        var alertas = [], primerNombre = String(emp.nombre || '').split(' ')[0];
+        extraDiario.forEach(function (x, d) {
+          if (x > R.maxExtrasDia) alertas.push({ nivel: 'alta', empleadoId: emp.id, dia: d, texto: primerNombre + ' tendría ' + horas(x) + ' extra el ' + fechaLarga(lunes + d) + '. El máximo legal es 2 h por día.' });
+        });
+        if (extrasMin > R.maxExtrasSemana) alertas.push({ nivel: 'alta', empleadoId: emp.id, texto: primerNombre + ' suma ' + horas(extrasMin) + ' extra en la semana. El máximo legal es 12 h.' });
+        if (res.diasTrabajados >= 7) alertas.push({ nivel: 'alta', empleadoId: emp.id, texto: primerNombre + ' no tiene día de descanso esta semana.' });
+        if (extrasMin > 0 && !alertas.length) alertas.push({ nivel: 'media', empleadoId: emp.id, texto: primerNombre + ' hace ' + horas(extrasMin) + ' extra: ' + cop(res.extras) + ' adicionales.' });
+        if (res.sinUsarMin >= 240) alertas.push({ nivel: 'info', empleadoId: emp.id, texto: primerNombre + ' tiene ' + horas(res.sinUsarMin) + ' de su jornada sin programar. Ya están pagas en su salario.' });
+        res.alertas = alertas;
+        return res;
+      }
+      function calcularEquipo(lunesIso, empleados, turnos, sede) {
+        var porEmp = {}, porDia = [0, 0, 0, 0, 0, 0, 0], tot = { base: 0, recargos: 0, extras: 0, sobrecosto: 0, total: 0, totalMin: 0, extrasMin: 0, alertas: [], minutos: ceros() };
+        empleados.forEach(function (e) {
+          var r = calcularSemana(lunesIso, e, turnos.filter(function (t) { return t.emp === e.id; }), sede);
+          porEmp[e.id] = r;
+          ['base', 'recargos', 'extras', 'sobrecosto', 'total', 'totalMin', 'extrasMin'].forEach(function (k) { tot[k] += r[k]; });
+          tot.alertas = tot.alertas.concat(r.alertas);
+          ORDEN_TIPOS.forEach(function (k) { tot.minutos[k] += r.minutos[k]; });
+          Object.keys(r.porTurno).forEach(function (id) { var pt = r.porTurno[id]; porDia[pt.dia] += pt.recargos + pt.extras + (e.pago === 'hora' ? pt.base : 0); });
+        });
+        var peso = { alta: 0, media: 1, info: 2 };
+        tot.alertas.sort(function (a, b) { return peso[a.nivel] - peso[b.nivel]; });
+        tot.altas = tot.alertas.filter(function (a) { return a.nivel === 'alta'; }).length;
+        return { porEmpleado: porEmp, total: tot, porDia: porDia };
+      }
+      function cobertura(lunesIso, empleados, turnos, sede, bloques, dia) {
+        var lista = empleados.map(function (e) {
+          var suyos = turnos.filter(function (t) { return t.emp === e.id; });
+          var nuevos = bloques.map(function (b, i) { return { id: 'sim' + i, emp: e.id, dia: dia, ini: b[0], fin: b[1] }; });
+          var antes = calcularSemana(lunesIso, e, suyos, sede), despues = calcularSemana(lunesIso, e, suyos.concat(nuevos), sede);
+          var altas = function (r) { return r.alertas.filter(function (a) { return a.nivel === 'alta'; }); };
+          var nuevasAltas = altas(despues).filter(function (a) { return !altas(antes).some(function (b) { return b.texto === a.texto; }); });
+          var ya = suyos.filter(function (t) { return t.dia === dia; });
+          var extraNueva = despues.extrasMin - antes.extrasMin;
+          var estado = ya.length ? 'ocupado' : (nuevasAltas.length ? 'incumple' : (extraNueva > 0 ? 'extra' : 'ok'));
+          var nota = estado === 'ocupado' ? 'Ya trabaja ese día (' + ya.map(function (t) { return hhmm(t.ini) + '–' + hhmm(t.fin); }).join(', ') + ')'
+            : estado === 'incumple' ? nuevasAltas[0].texto
+            : estado === 'extra' ? 'Le generaría ' + horas(extraNueva) + ' extra'
+            : 'Dentro de su jornada: solo pagas recargos';
+          return { empleado: e, delta: despues.total - antes.total, estado: estado, nota: nota };
+        });
+        var peso = { ok: 0, extra: 1, incumple: 2, ocupado: 3 };
+        lista.sort(function (a, b) { return peso[a.estado] - peso[b.estado] || a.delta - b.delta; });
+        return lista;
+      }
+      return {
+        R: R, TIPOS: TIPOS, ORDEN_TIPOS: ORDEN_TIPOS, DIAS: DIAS, MESES: MESES,
+        diaNum: diaNum, isoDe: isoDe, fechaDe: fechaDe, diaSemana: diaSemana, festivo: festivo, reglasDelDia: reglasDelDia,
+        factores: factores, valorHora: valorHora, calcularSemana: calcularSemana, calcularEquipo: calcularEquipo, cobertura: cobertura,
+        cop: cop, horas: horas, hhmm: hhmm, minDe: minDe, fechaLarga: fechaLarga, fechaCorta: fechaCorta, finReal: finReal
+      };
+    }
+  }
+
+  semillaEmpleados() {
+    return [
+      { id: 'e1', nombre: 'Luisa Fernanda Ospina', cargo: 'Jefe de cocina', telefono: '300 000 0001', pago: 'mensual', salario: 2400000, jornada: 'completa', dias: 6 },
+      { id: 'e2', nombre: 'Jhon Fredy Mosquera', cargo: 'Cocinero', telefono: '300 000 0002', pago: 'mensual', salario: 1750905, jornada: 'completa', dias: 6 },
+      { id: 'e3', nombre: 'Yuliana Caicedo', cargo: 'Auxiliar de cocina', telefono: '300 000 0003', pago: 'mensual', salario: 1750905, jornada: 'completa', dias: 6 },
+      { id: 'e4', nombre: 'Brayan Valencia', cargo: 'Mesero', telefono: '300 000 0004', pago: 'mensual', salario: 1750905, jornada: 'completa', dias: 6 },
+      { id: 'e5', nombre: 'Daniela Rengifo', cargo: 'Mesera', telefono: '300 000 0005', pago: 'mensual', salario: 1750905, jornada: 'completa', dias: 6 },
+      { id: 'e6', nombre: 'Andrés Felipe Grueso', cargo: 'Cajero', telefono: '300 000 0006', pago: 'mensual', salario: 1900000, jornada: 'completa', dias: 6 },
+      { id: 'e7', nombre: 'Kevin Angulo', cargo: 'Mesero de fin de semana', telefono: '300 000 0007', pago: 'mensual', salario: 1000517, jornada: 24, dias: 4 },
+      { id: 'e8', nombre: 'Marly Hurtado', cargo: 'Auxiliar de servicios', telefono: '300 000 0008', pago: 'hora', valorHora: 9000, jornada: 18, dias: 3 }
+    ];
+  }
+  armar(defs, pre) {
+    var out = [], i = 0;
+    defs.forEach(function (d) { d[1].forEach(function (dia) { out.push({ id: pre + (i++), emp: d[0], dia: dia, ini: d[2], fin: d[3] }); }); });
+    return out;
+  }
+  semillaA() {
+    return this.armar([
+      ['e1', [0, 1, 2, 3, 4, 5], 420, 900], ['e2', [1, 2, 3, 4, 5, 6], 900, 1380], ['e3', [0, 1, 3, 4, 5, 6], 420, 900],
+      ['e4', [0, 1, 2, 3, 4], 900, 1380], ['e4', [5], 720, 1380], ['e5', [0, 1, 2, 3, 4, 5, 6], 420, 840],
+      ['e6', [1, 2, 3, 4, 5, 6], 960, 1380], ['e7', [4, 5], 1020, 1380], ['e7', [6], 660, 1020], ['e8', [4, 5, 6], 480, 840]
+    ], 'a');
+  }
+  semillaB() {
+    return this.armar([
+      ['e1', [0, 1, 2, 3, 4, 5], 420, 840], ['e2', [1, 2, 3, 4, 5, 6], 960, 1380], ['e3', [0, 1, 3, 4, 5, 6], 420, 840],
+      ['e4', [0, 1, 2, 3, 4, 5], 960, 1380], ['e5', [0, 1, 2, 3, 4, 5], 420, 840], ['e6', [1, 2, 3, 4, 5, 6], 960, 1380],
+      ['e7', [3, 4, 5], 1020, 1380], ['e7', [6], 420, 780], ['e8', [4, 5, 6], 480, 840]
+    ], 'b');
+  }
+  plantillas() {
+    return [
+      { id: 'p3', nombre: 'Mañana 7 h', bloques: [[420, 840]] },
+      { id: 'p4', nombre: 'Cierre 7 h', bloques: [[960, 1380]] },
+      { id: 'p5', nombre: 'Partido 7 h', bloques: [[660, 900], [1080, 1260]] },
+      { id: 'p1', nombre: 'Mañana 8 h', bloques: [[420, 900]] },
+      { id: 'p2', nombre: 'Tarde 8 h', bloques: [[900, 1380]] }
+    ];
+  }
+  lunesIso() { var M = this.motor(); return M.isoDe(M.diaNum('2026-10-19') + 7 * this.state.semana); }
+  semanaActual() { return this.state.semanas[this.state.semana] || { A: [], B: null, nombreB: '' }; }
+  turnosActivos() { var s = this.semanaActual(); return (this.state.escenario === 'B' && s.B) ? s.B : s.A; }
+  sedeMotor() { return { modo: this.state.sede.modo === 'flexible' ? 'flexible' : 'fija' }; }
+  equipoMotor() {
+    var modo = this.state.sede.modo;
+    return this.state.empleados.map(function (e) { return e.jornada === 'completa' ? Object.assign({}, e, { dias: modo === 'fija5' ? 5 : 6 }) : e; });
+  }
+  guardarSemana(cambios) {
+    var semanas = Object.assign({}, this.state.semanas);
+    semanas[this.state.semana] = Object.assign({}, this.semanaActual(), cambios);
+    this.setState({ semanas: semanas });
+  }
+  ponerTurnos(lista) {
+    if (this.state.escenario === 'B' && this.semanaActual().B) this.guardarSemana({ B: lista }); else this.guardarSemana({ A: lista });
+  }
+  nuevoId(pre) { var n = this.state.sec + 1; this.setState({ sec: n }); return pre + n + '-' + Math.floor(Math.random() * 1e6); }
+  avisar(txt) {
+    var self = this;
+    this.setState({ toast: txt });
+    clearTimeout(this._t);
+    this._t = setTimeout(function () { self.setState({ toast: '' }); }, 3200);
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+  hojaActual() {
+    if (this.state.hoja !== undefined) return this.state.hoja;
+    var h = this.props.hoja;
+    if (h === 'cubrir') return { tipo: 'cubrir', dia: 3, plantilla: 'p3' };
+    if (h === 'turno') { var t = this.turnosActivos().filter(function (x) { return x.emp === 'e2' && x.dia === 6; })[0]; return t ? { tipo: 'turno', id: t.id } : null; }
+    if (h === 'mensaje') return { tipo: 'mensaje', emp: 'e2' };
+    return null;
+  }
+  iniciales(nombre) { var p = String(nombre || '?').trim().split(/\s+/); return ((p[0] || '?')[0] + (p.length > 1 ? p[p.length > 2 ? 2 : 1][0] : '')).toUpperCase(); }
+  cap(t) { return t ? t.charAt(0).toUpperCase() + t.slice(1) : t; }
+  estiloTurno(pt) {
+    if (!pt) return 'background: #FFFFFF; color: #16231F; border: 1px solid #DEE2DA';
+    if (pt.extraMin > 0) return 'background: #FBE7DF; color: #9E3714; border: 1px solid #F1C3B1';
+    if (pt.min.fd + pt.min.fn > 0) return 'background: #FCEFD9; color: #7A4A00; border: 1px solid #F2D7A6';
+    if (pt.min.on > 0) return 'background: #E8EAFA; color: #2E3790; border: 1px solid #C9CDF2';
+    return 'background: #F3F4EF; color: #16231F; border: 1px solid #DEE2DA';
+  }
+  formDe(e) {
+    return e ? { id: e.id, nombre: e.nombre, cargo: e.cargo, telefono: e.telefono, pago: e.pago, salario: String(e.salario || ''), valorHora: String(e.valorHora || ''), jornada: e.jornada === 'completa' ? 'completa' : 'parcial', horas: String(e.jornada === 'completa' ? 42 : e.jornada), dias: String(e.dias || 6), descanso: String(e.descanso || 0) }
+      : { id: null, nombre: '', cargo: '', telefono: '', pago: 'mensual', salario: '1750905', valorHora: '9000', jornada: 'completa', horas: '24', dias: '4', descanso: '0' };
+  }
+
+  renderVals() {
+    var self = this, M = this.motor(), s = this.state;
+    var pantalla = s.pantalla || this.props.pantalla || 'onboarding';
+    var vista = s.vista || this.props.vista || 'dia';
+    var hoja = this.hojaActual();
+    var lunesIso = this.lunesIso(), lunes = M.diaNum(lunesIso);
+    var emps = this.equipoMotor(), sede = this.sedeMotor();
+    var sem = this.semanaActual();
+    var turnos = this.turnosActivos();
+    var res = M.calcularEquipo(lunesIso, emps, turnos, sede);
+    var T = res.total, porEmp = res.porEmpleado;
+    var horasMax = M.reglasDelDia(lunes).horasMax;
+    var activo = 'background: #FFFFFF; color: #16231F; box-shadow: 0 1px 2px rgba(22,35,31,0.12)';
+    var inactivo = 'background: transparent; color: #55625C';
+    var ir = function (p) { return function () { self.setState({ pantalla: p, hoja: null }); }; };
+    var nav = function (p) { return pantalla === p || (p === 'horario' && pantalla === 'publicar') ? 'color: #0E6B57' : 'color: #55625C'; };
+    var cerrarHoja = function () { self.setState({ hoja: null }); };
+
+    // Onboarding
+    var ob = s.ob;
+    var setOb = function (k) { return function (e) { var o = Object.assign({}, self.state.ob); o[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; self.setState({ ob: o }); }; };
+    var tipos = ['Restaurante', 'Panadería', 'Droguería', 'Vigilancia', 'Clínica o consultorio', 'Otro'].map(function (t) {
+      return { nombre: t, estilo: t === ob.tipo ? 'background: #16231F; color: #FFFFFF; border: 1px solid #16231F' : 'background: #FFFFFF; color: #16231F; border: 1px solid #DEE2DA', elegir: function () { self.setState({ ob: Object.assign({}, self.state.ob, { tipo: t }) }); } };
+    });
+    var modos = [
+      { id: 'fija6', titulo: '6 días de 7 horas', texto: 'Lo más común con turnos. Desde la hora 8 del día se paga como extra.' },
+      { id: 'fija5', titulo: '5 días de 8 h 24 min', texto: 'Para quien descansa dos días. Pasadas las 8 h 24 min del día se paga como extra.' },
+      { id: 'flexible', titulo: 'Jornada flexible pactada por escrito', texto: 'Entre 4 y 9 horas por día sin pasar de ' + horasMax + ' a la semana. Requiere acuerdo firmado.' }
+    ].map(function (m) {
+      var sel = m.id === ob.modo;
+      return Object.assign({}, m, { sel: sel ? 'true' : 'false', estilo: sel ? 'border: 2px solid #0E6B57; background: #E3F1EC' : 'border: 1px solid #DEE2DA; background: #FFFFFF', marca: sel ? 'background: #0E6B57; box-shadow: 0 0 0 3px #E3F1EC, 0 0 0 5px #0E6B57' : 'background: #FFFFFF; border: 2px solid #A9BBB3', elegir: function () { self.setState({ ob: Object.assign({}, self.state.ob, { modo: m.id }) }); } });
+    });
+    var bloqueado = s.paso === 1 && !ob.acepta;
+    var obSiguiente = function () {
+      if (bloqueado) return;
+      if (self.state.paso < 3) { self.setState({ paso: self.state.paso + 1 }); return; }
+      var o = self.state.ob;
+      self.setState({ negocio: o.negocio || 'Mi negocio', sede: { nombre: o.sede || 'Principal', abre: o.abre, cierra: o.cierra, modo: o.modo }, pantalla: 'equipo', paso: 1, hoja: null });
+      self.avisar('Sede creada. Cargamos un equipo de ejemplo para que pruebes todo.');
+    };
+
+    // Semana y escenarios
+    var f0 = M.fechaDe(lunes), f6 = M.fechaDe(lunes + 6);
+    var semanaTexto = f0.getUTCMonth() === f6.getUTCMonth() ? f0.getUTCDate() + ' al ' + f6.getUTCDate() + ' de ' + M.MESES[f6.getUTCMonth()] : M.fechaCorta(lunes) + ' al ' + M.fechaCorta(lunes + 6);
+    var tieneB = !!sem.B;
+    var escenario = tieneB ? s.escenario : 'A';
+    var publicado = !!s.publicado[s.semana];
+    var cambiarSemana = function (d) { return function () { var n = Math.max(0, Math.min(10, self.state.semana + d)); self.setState({ semana: n, escenario: 'A', hoja: null }); }; };
+    var crearB = function () {
+      var a = self.semanaActual().A, sec = Date.now();
+      self.guardarSemana({ B: a.map(function (t, i) { return Object.assign({}, t, { id: 'b' + sec + '-' + i }); }), nombreB: 'copia de A' });
+      self.setState({ escenario: 'B', pantalla: 'horario', hoja: null });
+      self.avisar('Escenario B creado como copia de A. Cámbialo y compara.');
+    };
+    var copiarAnterior = function () {
+      var st = self.state, k = st.semana - 1;
+      while (k >= 0 && !(st.semanas[k] && st.semanas[k].A.length)) k--;
+      if (k < 0) { self.avisar('No hay una semana anterior para copiar.'); return; }
+      var sec = Date.now();
+      self.guardarSemana({ A: st.semanas[k].A.map(function (t, i) { return Object.assign({}, t, { id: 'c' + sec + '-' + i }); }), B: null });
+      self.avisar('Copiamos la semana anterior. Revisa los festivos marcados.');
+    };
+    var publicar = function () {
+      var actual = self.semanaActual();
+      if (self.state.escenario === 'B' && actual.B) self.guardarSemana({ A: actual.B, B: null });
+      var p = Object.assign({}, self.state.publicado); p[self.state.semana] = true;
+      self.setState({ publicado: p, pantalla: 'publicar', escenario: 'A', hoja: null });
+    };
+
+    // Resumen
+    var mins = T.minutos, totalMin = T.totalMin || 1;
+    var grupos = [
+      { nombre: 'Ordinarias', color: '#A9BBB3', min: mins.od },
+      { nombre: 'Nocturnas', color: '#8D96F0', min: mins.on },
+      { nombre: 'Dominicales', color: '#F2B45A', min: mins.fd + mins.fn },
+      { nombre: 'Extra', color: '#F07A50', min: mins.xd + mins.xn + mins.xfd + mins.xfn }
+    ];
+    var barra = grupos.filter(function (g) { return g.min > 0; }).map(function (g) { return { color: g.color, ancho: (g.min / totalMin * 100).toFixed(2) + '%' }; });
+    var leyenda = grupos.map(function (g) { return { color: g.color, nombre: g.nombre, horas: M.horas(g.min) }; });
+    var medias = T.alertas.filter(function (a) { return a.nivel !== 'alta'; }).length;
+    var franjaTexto = T.altas ? (T.altas === 1 ? '1 alerta legal' : T.altas + ' alertas legales') + (medias ? ' y ' + medias + ' avisos' : '') : (medias ? 'Sin alertas legales · ' + medias + ' avisos' : 'Sin alertas: todo dentro de la ley');
+
+    // Vista por día
+    var letras = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    var diaSel = s.dia;
+    var dias = letras.map(function (l, i) {
+      var n = lunes + i, fest = M.festivo(n), sel = i === diaSel;
+      return {
+        letra: l, num: M.fechaDe(n).getUTCDate(), marca: fest ? 'Festivo' : (i === 6 ? 'Dom.' : ''),
+        estilo: sel ? 'background: #16231F; color: #FFFFFF; border-color: #16231F' : 'background: #FFFFFF; color: #16231F; border-color: #DEE2DA',
+        marcaEstilo: sel ? 'color: #F6BE6B' : 'color: #8A5300',
+        aria: 'Ver ' + M.fechaLarga(n) + (fest ? ', festivo' : ''),
+        elegir: function () { self.setState({ dia: i }); }
+      };
+    });
+    var nSel = lunes + diaSel, festSel = M.festivo(nSel), Dsel = Math.round(M.reglasDelDia(nSel).D * 100);
+    var diaSub = festSel ? 'Festivo: ' + festSel + ' · recargo del ' + Dsel + ' %' : (diaSel === 6 ? 'Domingo · recargo dominical del ' + Dsel + ' %' : 'Desde las 7:00 p. m. la hora es nocturna');
+    var abrirCubrir = function (dia, resaltar) { return function () { self.setState({ hoja: { tipo: 'cubrir', dia: dia, plantilla: 'p3', resaltar: resaltar || null } }); }; };
+    var abrirTurno = function (id) { return function () { self.setState({ hoja: { tipo: 'turno', id: id } }); }; };
+    var filasDia = emps.map(function (e) {
+      var ts = turnos.filter(function (t) { return t.emp === e.id && t.dia === diaSel; }).sort(function (a, b) { return a.ini - b.ini; });
+      var r = porEmp[e.id];
+      return {
+        orden: ts.length ? 0 : 1, iniciales: self.iniciales(e.nombre), nombre: e.nombre, cargo: e.cargo, libre: !ts.length,
+        alerta: r.alertas.some(function (a) { return a.nivel === 'alta' && (a.dia === undefined || a.dia === diaSel); }),
+        turnos: ts.map(function (t) {
+          var pt = r.porTurno[t.id];
+          return { texto: M.hhmm(t.ini) + '–' + M.hhmm(t.fin), costo: pt.total > 0.5 ? '+' + M.cop(pt.total) : 'Sin recargo', estilo: self.estiloTurno(pt), abrir: abrirTurno(t.id), aria: 'Ver costo del turno de ' + e.nombre + ' de ' + M.hhmm(t.ini) + ' a ' + M.hhmm(t.fin) };
+        }),
+        agregar: abrirCubrir(diaSel, e.id), agregarAria: 'Agregar turno a ' + e.nombre
+      };
+    }).sort(function (a, b) { return a.orden - b.orden; });
+
+    // Vista por persona
+    var filasPersona = emps.map(function (e) {
+      var r = porEmp[e.id];
+      var celdas = letras.map(function (l, i) {
+        var ts = turnos.filter(function (t) { return t.emp === e.id && t.dia === i; }).sort(function (a, b) { return a.ini - b.ini; });
+        if (!ts.length) return { texto: '+', estilo: 'background: transparent; color: #8A958F; border: 1px dashed #C9D0C6', abrir: abrirCubrir(i, e.id), aria: 'Agregar turno a ' + e.nombre + ' el ' + M.fechaLarga(lunes + i) };
+        var peor = ts.map(function (t) { return r.porTurno[t.id]; }).sort(function (a, b) { return b.extraMin - a.extraMin || (b.min.fd + b.min.fn) - (a.min.fd + a.min.fn); })[0];
+        var texto = ts.length > 1 ? 'Part.' : M.hhmm(ts[0].ini).slice(0, 2) + '–' + M.hhmm(ts[0].fin).slice(0, 2);
+        return { texto: texto, estilo: self.estiloTurno(peor), abrir: abrirTurno(ts[0].id), aria: 'Turno de ' + e.nombre + ' el ' + M.fechaLarga(lunes + i) };
+      });
+      var alta = r.alertas.filter(function (a) { return a.nivel === 'alta'; })[0];
+      return {
+        nombre: e.nombre, horasTexto: M.horas(r.totalMin) + ' de ' + r.horasPactadas + ' h pactadas',
+        ancho: Math.min(100, r.totalMin / (r.horasPactadas * 60) * 100).toFixed(1) + '%',
+        barraColor: r.extrasMin > 0 ? '#D9592B' : '#0E6B57',
+        costo: M.cop(e.pago === 'hora' ? r.total : r.sobrecosto), costoTexto: e.pago === 'hora' ? 'costo de la semana' : 'recargos y extras',
+        celdas: celdas, hayAlerta: !!alta, alerta: alta ? alta.texto : ''
+      };
+    });
+
+    // Hoja: ¿quién cubre?
+    var cubrir = { fecha: '', plantillas: [], lista: [], consejo: '' };
+    var hojaCubrir = !!(hoja && hoja.tipo === 'cubrir');
+    if (hojaCubrir) {
+      var pls = this.plantillas();
+      var pSel = pls.filter(function (p) { return p.id === hoja.plantilla; })[0] || pls[0];
+      cubrir.fecha = this.cap(M.fechaLarga(lunes + hoja.dia)) + (M.festivo(lunes + hoja.dia) ? ' · festivo' : (hoja.dia === 6 ? ' · domingo' : ''));
+      cubrir.plantillas = pls.map(function (p) {
+        var sel = p.id === pSel.id;
+        return { nombre: p.nombre, horario: p.bloques.map(function (b) { return M.hhmm(b[0]) + '–' + M.hhmm(b[1]); }).join(' y '), estilo: sel ? 'background: #16231F; color: #FFFFFF; border: 1px solid #16231F' : 'background: #FFFFFF; color: #16231F; border: 1px solid #DEE2DA', elegir: function () { self.setState({ hoja: Object.assign({}, self.hojaActual(), { plantilla: p.id }) }); } };
+      });
+      var ranking = M.cobertura(lunesIso, emps, turnos, sede, pSel.bloques, hoja.dia);
+      var estilos = {
+        ok: { fila: 'background: #E3F1EC; border: 1px solid #B9DDD0', nota: 'color: #0B5546' },
+        extra: { fila: 'background: #FFFFFF; border: 1px solid #DEE2DA', nota: 'color: #8A5300' },
+        incumple: { fila: 'background: #FFFFFF; border: 1px solid #F1C3B1', nota: 'color: #9E3714' },
+        ocupado: { fila: 'background: #F3F4EF; border: 1px solid #E6E9E2', nota: 'color: #55625C' }
+      };
+      cubrir.lista = ranking.map(function (c) {
+        var e = c.empleado, primer = e.nombre.split(' ')[0];
+        return {
+          nombre: e.nombre + (hoja.resaltar === e.id ? ' (seleccionada)' : ''), nota: c.nota, delta: c.estado === 'ocupado' ? '—' : (c.delta >= 0 ? '+' : '') + M.cop(c.delta),
+          filaEstilo: estilos[c.estado].fila, notaEstilo: estilos[c.estado].nota, puede: c.estado !== 'ocupado', aria: 'Asignar ' + pSel.nombre + ' a ' + e.nombre,
+          asignar: function () {
+            var sec = Date.now();
+            var nuevos = pSel.bloques.map(function (b, i) { return { id: 'n' + sec + '-' + i, emp: e.id, dia: hoja.dia, ini: b[0], fin: b[1] }; });
+            self.ponerTurnos(self.turnosActivos().concat(nuevos));
+            self.setState({ hoja: null, dia: hoja.dia });
+            self.avisar('Turno asignado a ' + primer + ': ' + (c.delta >= 0 ? '+' : '') + M.cop(c.delta) + ' esta semana.');
+          }
+        };
+      });
+      var mejor = ranking.filter(function (c) { return c.estado === 'ok' || c.estado === 'extra'; })[0];
+      cubrir.consejo = mejor ? 'Lo más económico: ' + mejor.empleado.nombre.split(' ')[0] + ', ' + (mejor.delta >= 0 ? '+' : '') + M.cop(mejor.delta) + ' en la semana.' : 'Nadie lo cubre sin incumplir un límite. Considera contratar a alguien de medio tiempo.';
+    }
+
+    // Hoja: detalle del turno
+    var turno = { nombre: '', fecha: '', ini: '', fin: '', costo: '', etiqueta: '', baseTexto: '', filas: [], notas: [] };
+    var tSel = hoja && hoja.tipo === 'turno' ? turnos.filter(function (t) { return t.id === hoja.id; })[0] : null;
+    var hojaTurno = !!tSel;
+    if (hojaTurno) {
+      var eT = emps.filter(function (e) { return e.id === tSel.emp; })[0];
+      var rT = porEmp[eT.id], pt = rT.porTurno[tSel.id], nT = lunes + tSel.dia;
+      var DT = M.reglasDelDia(nT).D, F = M.factores(DT);
+      var colores = { od: '#A9BBB3', on: '#3D47A8', fd: '#E39A2B', fn: '#E39A2B', xd: '#D9592B', xn: '#D9592B', xfd: '#D9592B', xfn: '#D9592B' };
+      var esHora = eT.pago === 'hora';
+      turno.nombre = eT.nombre;
+      turno.fecha = this.cap(M.fechaLarga(nT)) + ' · ' + M.horas(M.finReal(tSel) - tSel.ini);
+      turno.ini = M.hhmm(tSel.ini); turno.fin = M.hhmm(tSel.fin);
+      turno.etiqueta = esHora ? 'Costo total del turno' : 'Lo que pagas además del salario';
+      turno.costo = M.cop(pt.total);
+      turno.baseTexto = esHora ? 'Pago por horas: incluye las horas ordinarias.' : (pt.base > 0.5 ? 'Las horas ordinarias (' + M.cop(pt.base) + ') ya están en su salario.' : 'En su día de descanso ninguna hora va incluida en el salario.');
+      turno.filas = M.ORDEN_TIPOS.filter(function (k) { return pt.min[k] > 0; }).map(function (k) {
+        var esX = k.charAt(0) === 'x';
+        var monto = pt.dinero[k] + (esHora && !esX ? pt.min[k] * rT.valorHora / 60 : 0);
+        return { nombre: M.TIPOS[k].nombre, horas: M.horas(pt.min[k]), factor: '×' + F[k].total.toFixed(2).replace('.', ','), color: colores[k], concepto: esX ? 'hora completa' : (esHora || k === 'fd' || k === 'fn' ? 'hora + recargo' : (k === 'od' ? 'en el salario' : 'solo recargo')), monto: M.cop(monto) };
+      });
+      var notas = [];
+      var domMin = pt.min.fd + pt.min.fn + pt.min.xfd + pt.min.xfn, nocMin = pt.min.on + pt.min.fn + pt.min.xn + pt.min.xfn;
+      var etiquetaDescanso = M.festivo(nT) ? 'Festivo (' + M.festivo(nT) + ')' : (eT.descanso ? 'Día de descanso pactado' : 'Domingo');
+      if (domMin) notas.push(etiquetaDescanso + ': ' + (esHora ? 'cada hora lleva' : 'cada hora se paga completa, aparte del salario, más') + ' un recargo del ' + Math.round(DT * 100) + ' % (Ley 2466 de 2025). Sube al 100 % el 1 de julio de 2027.');
+      if (nocMin) notas.push('Desde las 7:00 p. m. hasta las 6:00 a. m. la hora es nocturna: recargo del 35 %.');
+      if (pt.extraMin) notas.push(M.horas(pt.extraMin) + ' de este turno son extra porque pasan de ' + M.horas(rT.topeDia === Infinity ? 0 : rT.topeDia) + ' en el día o de ' + rT.horasPactadas + ' h en la semana.');
+      notas.push(esHora ? 'Valor pactado por hora: ' + M.cop(rT.valorHora) + '.' : 'Valor de la hora ordinaria: ' + M.cop(rT.valorHora) + ' (salario ÷ ' + (rT.horasPactadas * 5) + ').');
+      turno.notas = notas.map(function (x) { return { texto: x }; });
+    }
+    var cambiarTurno = function (campo) {
+      return function (e) {
+        var v = e.target.value; if (!v) return;
+        var h = self.hojaActual();
+        self.ponerTurnos(self.turnosActivos().map(function (t) { if (t.id !== h.id) return t; var c = Object.assign({}, t); c[campo] = M.minDe(v); return c; }));
+        if (self.state.hoja === undefined) self.setState({ hoja: h });
+      };
+    };
+    var eliminarTurno = function () {
+      var h = self.hojaActual();
+      self.ponerTurnos(self.turnosActivos().filter(function (t) { return t.id !== h.id; }));
+      self.setState({ hoja: null });
+      self.avisar('Turno eliminado.');
+    };
+
+    // Equipo y formulario
+    var equipo = emps.map(function (e) {
+      var vh = M.valorHora(e, lunes);
+      return {
+        iniciales: self.iniciales(e.nombre), nombre: e.nombre, cargo: e.cargo, valorHora: M.cop(vh),
+        jornada: (e.jornada === 'completa' ? horasMax + ' h' : e.jornada + ' h') + ' en ' + e.dias + ' días',
+        detalle: e.pago === 'hora' ? 'Por horas · ' + M.cop(vh) + ' la hora' : 'Salario ' + M.cop(e.salario),
+        editar: function () { self.setState({ hoja: { tipo: 'empleado', form: self.formDe(self.state.empleados.filter(function (x) { return x.id === e.id; })[0]) } }); }
+      };
+    });
+    var hojaEmpleado = !!(hoja && hoja.tipo === 'empleado');
+    var fm = hojaEmpleado ? hoja.form : this.formDe(null);
+    var setF = function (k, valor) {
+      return function (e) {
+        var h = self.hojaActual(), f = Object.assign({}, h.form);
+        f[k] = valor !== undefined ? valor : e.target.value;
+        self.setState({ hoja: Object.assign({}, h, { form: f }) });
+      };
+    };
+    var empForm = { pago: fm.pago, salario: +fm.salario || 0, valorHora: +fm.valorHora || 0, jornada: fm.jornada === 'completa' ? 'completa' : (+fm.horas || horasMax), dias: +fm.dias || 6 };
+    var vhForm = M.valorHora(empForm, lunes);
+    var minimoProp = 1750905 * (empForm.jornada === 'completa' ? 1 : Math.min(1, empForm.jornada / horasMax));
+    var formAviso = '';
+    if (fm.pago === 'mensual' && empForm.salario > 0 && empForm.salario < Math.round(minimoProp)) formAviso = 'El salario está por debajo del mínimo 2026 para esa jornada (' + M.cop(minimoProp) + ').';
+    if (fm.pago === 'hora' && empForm.valorHora > 0 && empForm.valorHora < Math.round(1750905 / (horasMax * 5))) formAviso = 'El valor de la hora está por debajo del mínimo 2026 (' + M.cop(1750905 / (horasMax * 5)) + ').';
+    var nombresDescanso = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    var descansoOpciones = [1, 2, 3, 4, 5, 6, 0].map(function (d, i) {
+      var sel = String(d) === String(fm.descanso || 0);
+      return { letra: letras[i], sel: sel ? 'true' : 'false', aria: 'Descansa el ' + nombresDescanso[d], estilo: sel ? 'background: #16231F; color: #FFFFFF; border: 1px solid #16231F' : 'background: #FFFFFF; color: #16231F; border: 1px solid #DEE2DA', elegir: setF('descanso', String(d)) };
+    });
+    var descansoNota = String(fm.descanso || 0) === '0' ? 'Por ley es el domingo. Los domingos y festivos trabajados llevan recargo.' : 'Solo si lo pactaron por escrito (Ley 2466 de 2025). Ese día y los festivos llevan recargo; el domingo pasa a ser un día normal. Confírmalo con tu contador.';
+    var guardarEmpleado = function () {
+      var f = self.hojaActual().form;
+      if (!String(f.nombre).trim()) { self.avisar('Escribe el nombre de la persona.'); return; }
+      var datos = { nombre: f.nombre.trim(), cargo: f.cargo || 'Sin cargo', telefono: f.telefono, pago: f.pago, salario: +f.salario || 0, valorHora: +f.valorHora || 0, jornada: f.jornada === 'completa' ? 'completa' : (+f.horas || 24), dias: +f.dias || 6, descanso: +f.descanso || 0 };
+      var lista = self.state.empleados;
+      lista = f.id ? lista.map(function (e) { return e.id === f.id ? Object.assign({}, e, datos) : e; }) : lista.concat([Object.assign({ id: 'e' + Date.now() }, datos)]);
+      self.setState({ empleados: lista, hoja: null });
+      self.avisar(f.id ? 'Cambios guardados. El costo se recalculó.' : datos.nombre.split(' ')[0] + ' quedó en tu equipo.');
+    };
+
+    // Alertas
+    var estAlerta = {
+      alta: { estilo: 'background: #FBE7DF; color: #6E2610', chip: 'background: #B4401A; color: #FFFFFF', etiqueta: 'Legal' },
+      media: { estilo: 'background: #FCEFD9; color: #5C3800', chip: 'background: #8A5300; color: #FFFFFF', etiqueta: 'Costo' },
+      info: { estilo: 'background: #E8EAFA; color: #252D78', chip: 'background: #3D47A8; color: #FFFFFF', etiqueta: 'Dato' }
+    };
+    var alertas = T.alertas.map(function (a) { var x = estAlerta[a.nivel]; return { texto: a.texto, estilo: x.estilo, chipEstilo: x.chip, etiqueta: x.etiqueta }; });
+
+    // Escenarios
+    var rA = M.calcularEquipo(lunesIso, emps, sem.A, sede).total;
+    var rB = tieneB ? M.calcularEquipo(lunesIso, emps, sem.B, sede).total : rA;
+    var difCop = function (d) { return d === 0 ? '—' : (d > 0 ? '+' : '−') + M.cop(Math.abs(d)).replace('$ ', '$ '); };
+    var filasComp = [
+      { etiqueta: 'Costo de la semana', a: M.cop(rA.total), b: M.cop(rB.total), d: rB.total - rA.total, tipo: 'cop' },
+      { etiqueta: 'Salarios (fijos)', a: M.cop(rA.base), b: M.cop(rB.base), d: rB.base - rA.base, tipo: 'cop' },
+      { etiqueta: 'Recargos', a: M.cop(rA.recargos), b: M.cop(rB.recargos), d: rB.recargos - rA.recargos, tipo: 'cop' },
+      { etiqueta: 'Horas extra', a: M.cop(rA.extras), b: M.cop(rB.extras), d: rB.extras - rA.extras, tipo: 'cop' },
+      { etiqueta: 'Horas programadas', a: M.horas(rA.totalMin), b: M.horas(rB.totalMin), d: rB.totalMin - rA.totalMin, tipo: 'h' },
+      { etiqueta: 'Alertas legales', a: String(rA.altas), b: String(rB.altas), d: rB.altas - rA.altas, tipo: 'n' }
+    ].map(function (f) {
+      var dif = f.tipo === 'cop' ? difCop(f.d) : (f.d === 0 ? '—' : (f.d > 0 ? '+' : '−') + (f.tipo === 'h' ? M.horas(Math.abs(f.d)) : Math.abs(f.d)));
+      var bueno = f.tipo === 'h' ? f.d >= 0 : f.d <= 0;
+      return { etiqueta: f.etiqueta, a: f.a, b: f.b, dif: dif, difEstilo: f.d === 0 ? 'color: #55625C' : (bueno ? 'color: #0B5546' : 'color: #9E3714') };
+    });
+    var ahorro = rA.total - rB.total;
+    var conclusion = ahorro > 0 ? 'B ahorra ' + M.cop(ahorro) + ' por semana, unos ' + M.cop(ahorro * 30 / 7) + ' al mes.' : (ahorro < 0 ? 'B cuesta ' + M.cop(-ahorro) + ' más por semana.' : 'A y B cuestan lo mismo.');
+    var menos = rA.totalMin - rB.totalMin;
+    var advertencia = menos > 0 ? 'Ojo: B programa ' + M.horas(menos) + ' menos. Revisa que cubras las horas de más movimiento.' : (rB.altas > 0 ? 'B todavía tiene ' + rB.altas + ' alertas legales.' : '');
+    var porDiaMin = function (lista) { var d = [0, 0, 0, 0, 0, 0, 0]; lista.forEach(function (t) { d[t.dia] += M.finReal(t) - t.ini; }); return d; };
+    var dA = porDiaMin(sem.A), dB = porDiaMin(tieneB ? sem.B : sem.A), maxD = Math.max.apply(null, dA.concat(dB).concat([1]));
+    var coberturaDias = letras.map(function (l, i) { return { letra: l, altoA: Math.round(dA[i] / maxD * 80) + 'px', altoB: Math.round(dB[i] / maxD * 80) + 'px', texto: Math.round(dA[i] / 60) + '/' + Math.round(dB[i] / 60) }; });
+
+    // Publicar
+    var abrevs = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+    var listaPublicar = emps.filter(function (e) { return sem.A.some(function (t) { return t.emp === e.id; }); }).map(function (e) {
+      var ts = sem.A.filter(function (t) { return t.emp === e.id; });
+      var min = ts.reduce(function (a, t) { return a + M.finReal(t) - t.ini; }, 0);
+      var enviado = !!s.enviados[e.id];
+      return { nombre: e.nombre, resumen: ts.length + ' turnos · ' + M.horas(min) + ' · +57 ' + e.telefono, enviado: enviado, pendiente: !enviado, abrir: function () { self.setState({ hoja: { tipo: 'mensaje', emp: e.id } }); } };
+    });
+    var enviadosN = listaPublicar.filter(function (p) { return p.enviado; }).length;
+    var hojaMensaje = !!(hoja && hoja.tipo === 'mensaje');
+    var mensajeNombre = '', mensajeTexto = '';
+    if (hojaMensaje) {
+      var eM = emps.filter(function (e) { return e.id === hoja.emp; })[0] || emps[0];
+      mensajeNombre = eM.nombre;
+      var lineas = letras.map(function (l, i) {
+        var ts = sem.A.filter(function (t) { return t.emp === eM.id && t.dia === i; }).sort(function (a, b) { return a.ini - b.ini; });
+        return abrevs[i] + ' ' + M.fechaDe(lunes + i).getUTCDate() + ': ' + (ts.length ? ts.map(function (t) { return M.hhmm(t.ini) + ' a ' + M.hhmm(t.fin); }).join(' y ') : 'descanso');
+      });
+      mensajeTexto = 'Hola ' + eM.nombre.split(' ')[0] + ', este es tu horario del ' + semanaTexto + ' en ' + s.negocio + ' (sede ' + s.sede.nombre + '):\n\n' + lineas.join('\n') + '\n\nTambién lo puedes ver aquí: [dominio]/h/' + eM.id + 'k7q2';
+    }
+    var enviarMensaje = function () {
+      var h = self.hojaActual(), en = Object.assign({}, self.state.enviados); en[h.emp] = true;
+      self.setState({ enviados: en, hoja: null });
+      self.avisar('En la app real se abre WhatsApp con este mensaje listo para enviar.');
+    };
+
+    // Cuenta
+    var nEmp = emps.length;
+    var planes = [
+      { nombre: 'Sede pequeña', detalle: 'Hasta 10 personas', precio: '$ 49.000', max: 10 },
+      { nombre: 'Sede mediana', detalle: 'De 11 a 25 personas', precio: '$ 79.000', max: 25 },
+      { nombre: 'Sede grande', detalle: 'De 26 a 50 personas', precio: '$ 119.000', max: 50 }
+    ];
+    var planActual = planes.filter(function (p) { return nEmp <= p.max; })[0] || planes[2];
+    planes = planes.map(function (p) { var act = p === planActual; return Object.assign({}, p, { actual: act, estilo: act ? 'border: 2px solid #0E6B57' : 'border: 1px solid #DEE2DA' }); });
+    var proximamente = function (txt) { return function () { self.avisar(txt); }; };
+    var modoTexto = { fija6: '6 días de 7 h', fija5: '5 días de 8 h 24 min', flexible: 'jornada flexible' }[s.sede.modo];
+    var ajustes = [
+      { titulo: 'Sede ' + s.sede.nombre, detalle: s.sede.abre + ' a ' + s.sede.cierra + ' · ' + modoTexto, abrir: proximamente('Aquí se editan el horario de atención y la forma de repartir la jornada.') },
+      { titulo: 'Plantillas de turno', detalle: this.plantillas().length + ' plantillas', abrir: proximamente('Aquí se crean y editan las plantillas de turno.') },
+      { titulo: 'Datos personales', detalle: 'Política de tratamiento · exportar o borrar datos', abrir: proximamente('Aquí se consulta la política y se exportan o borran los datos.') },
+      { titulo: 'Cerrar sesión', detalle: s.ob.correo || 'Sesión activa', abrir: proximamente('Cerrarías la sesión.') }
+    ];
+
+    return {
+      esOnboarding: pantalla === 'onboarding', esApp: pantalla !== 'onboarding',
+      esHorario: pantalla === 'horario', esEquipo: pantalla === 'equipo', esEscenarios: pantalla === 'escenarios', esPublicar: pantalla === 'publicar', esCuenta: pantalla === 'cuenta',
+      paso: s.paso, paso1: s.paso === 1, paso2: s.paso === 2, paso3: s.paso === 3, pasoMayor: s.paso > 1, pasoAncho: Math.round(s.paso / 3 * 100) + '%',
+      textoSiguiente: s.paso === 3 ? 'Crear sede' : 'Continuar', ob: ob, tipos: tipos, modos: modos, horasMax: horasMax,
+      bloqueado: bloqueado, opacidadBoton: bloqueado ? '0.45' : '1',
+      setCorreo: setOb('correo'), setAcepta: setOb('acepta'), setNegocio: setOb('negocio'), setCiudad: setOb('ciudad'), setSede: setOb('sede'), setAbre: setOb('abre'), setCierra: setOb('cierra'),
+      obSiguiente: obSiguiente, obAtras: function () { self.setState({ paso: Math.max(1, self.state.paso - 1) }); },
+      negocioNombre: s.negocio, sedeNombre: s.sede.nombre, altas: T.altas, hayAltas: T.altas > 0,
+      alertasAria: T.altas ? 'Ver ' + T.altas + ' alertas legales' : 'Ver alertas',
+      abrirAlertas: function () { self.setState({ hoja: { tipo: 'alertas' } }); },
+      semanaTexto: semanaTexto, semanaAnterior: cambiarSemana(-1), semanaSiguiente: cambiarSemana(1),
+      verA: function () { self.setState({ escenario: 'A' }); }, verB: tieneB ? function () { self.setState({ escenario: 'B' }); } : crearB,
+      estiloA: escenario === 'A' ? activo : inactivo, estiloB: escenario === 'B' ? activo : inactivo, textoB: tieneB ? 'Escenario B' : '+ Crear B',
+      estadoTexto: publicado ? 'Publicado' : 'Borrador', estadoEstilo: publicado ? 'background: #E3F1EC; color: #0B5546; padding: 4px 8px' : 'background: #FFFFFF; color: #55625C; padding: 4px 8px',
+      semanaVacia: !turnos.length, semanaLlena: turnos.length > 0, copiarAnterior: copiarAnterior,
+      costoTotal: M.cop(T.total), sobrecosto: M.cop(T.sobrecosto), base: M.cop(T.base), horasTotales: M.horas(T.totalMin),
+      barra: barra, leyenda: leyenda, franjaTexto: franjaTexto,
+      franjaEstilo: T.altas ? 'background: #FBE7DF; color: #9E3714' : 'background: #E3F1EC; color: #0B5546',
+      verDia: function () { self.setState({ vista: 'dia' }); }, verPersona: function () { self.setState({ vista: 'persona' }); },
+      vistaDia: vista === 'dia', vistaPersona: vista === 'persona', estiloVistaDia: vista === 'dia' ? activo : inactivo, estiloVistaPersona: vista === 'persona' ? activo : inactivo,
+      dias: dias, diaTitulo: this.cap(M.fechaLarga(nSel)), diaSub: diaSub, diaSubEstilo: festSel || diaSel === 6 ? 'color: #8A5300' : 'color: #55625C',
+      costoDia: M.cop(res.porDia[diaSel]), filasDia: filasDia, filasPersona: filasPersona,
+      abrirCubrirDia: abrirCubrir(diaSel, null), publicar: publicar, textoPublicar: publicado ? 'Volver a enviar el horario' : 'Publicar y enviar por WhatsApp',
+      equipoTexto: emps.length + ' personas · sede ' + s.sede.nombre, nuevoEmpleado: function () { self.setState({ hoja: { tipo: 'empleado', form: self.formDe(null) } }); },
+      notaValorHora: 'Valor de la hora ordinaria = salario ÷ ' + (horasMax * 5) + ' (jornada de ' + horasMax + ' h desde el 15 de julio de 2026). Para tiempo parcial se usa su jornada pactada.',
+      equipo: equipo,
+      sinB: !tieneB, tieneB: tieneB, crearB: crearB, nombreB: sem.nombreB || 'copia de A', conclusion: conclusion, advertencia: advertencia, hayAdvertencia: !!advertencia,
+      conclusionEstilo: ahorro >= 0 ? 'background: #E3F1EC; color: #0B5546' : 'background: #FBE7DF; color: #6E2610',
+      filasComp: filasComp, coberturaDias: coberturaDias,
+      editarB: function () { self.setState({ escenario: 'B', pantalla: 'horario' }); },
+      usarB: function () { var b = self.semanaActual().B; self.guardarSemana({ A: b, B: null }); self.setState({ escenario: 'A', pantalla: 'horario' }); self.avisar('Ahora B es tu horario de la semana.'); },
+      listaPublicar: listaPublicar, enviadosTexto: enviadosN + ' de ' + listaPublicar.length + ' enviados',
+      exportar: function () { self.avisar('Descargaría un Excel con las novedades de la semana para tu contador y el registro de horas extra que exige la Ley 2466.'); },
+      planes: planes, textoPago: 'Transferencia o llave Bre-B a nombre de Turnia. Envía el comprobante y activamos tu sede el mismo día hábil. Recibes factura electrónica.',
+      pagar: function () { self.avisar('Se abriría WhatsApp para enviar el comprobante de pago.'); }, ajustes: ajustes,
+      irHorario: ir('horario'), irEquipo: ir('equipo'), irEscenarios: ir('escenarios'), irCuenta: ir('cuenta'),
+      navHorario: nav('horario'), navEquipo: nav('equipo'), navEscenarios: nav('escenarios'), navCuenta: nav('cuenta'),
+      hayHoja: !!hoja && (hojaCubrir || hojaTurno || hojaEmpleado || hojaMensaje || hoja.tipo === 'alertas'), cerrarHoja: cerrarHoja,
+      hojaCubrir: hojaCubrir, cubrirFecha: cubrir.fecha, cubrirPlantillas: cubrir.plantillas, cubrirLista: cubrir.lista, cubrirConsejo: cubrir.consejo,
+      hojaTurno: hojaTurno, turnoNombre: turno.nombre, turnoFecha: turno.fecha, turnoIni: turno.ini, turnoFin: turno.fin, turnoEtiqueta: turno.etiqueta,
+      turnoCosto: turno.costo, turnoBaseTexto: turno.baseTexto, turnoFilas: turno.filas, turnoNotas: turno.notas,
+      setTurnoIni: cambiarTurno('ini'), setTurnoFin: cambiarTurno('fin'), eliminarTurno: eliminarTurno,
+      hojaEmpleado: hojaEmpleado, form: fm, formTitulo: fm.id ? 'Editar a ' + fm.nombre.split(' ')[0] : 'Nueva persona',
+      setFNombre: setF('nombre'), setFCargo: setF('cargo'), setFTelefono: setF('telefono'), setFSalario: setF('salario'), setFValorHora: setF('valorHora'), setFHoras: setF('horas'), setFDias: setF('dias'),
+      pagoMensual: setF('pago', 'mensual'), pagoHora: setF('pago', 'hora'), jornadaCompleta: setF('jornada', 'completa'), jornadaParcial: setF('jornada', 'parcial'), usarMinimo: setF('salario', '1750905'),
+      estiloPagoMensual: fm.pago === 'mensual' ? activo : inactivo, estiloPagoHora: fm.pago === 'hora' ? activo : inactivo,
+      estiloCompleta: fm.jornada === 'completa' ? activo : inactivo, estiloParcial: fm.jornada !== 'completa' ? activo : inactivo,
+      formMensual: fm.pago === 'mensual', formHora: fm.pago === 'hora', formParcial: fm.jornada !== 'completa',
+      formValorTexto: fm.pago === 'hora' ? 'Valor de la hora' : 'Valor de su hora ordinaria', formValorHora: M.cop(vhForm),
+      formAviso: formAviso, hayFormAviso: !!formAviso, guardarEmpleado: guardarEmpleado, descansoOpciones: descansoOpciones, descansoNota: descansoNota,
+      hojaAlertas: !!(hoja && hoja.tipo === 'alertas'), alertas: alertas, sinAlertas: !alertas.length, escenario: escenario,
+      hojaMensaje: hojaMensaje, mensajeNombre: mensajeNombre, mensajeTexto: mensajeTexto, enviarMensaje: enviarMensaje,
+      toast: s.toast, hayToast: !!s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

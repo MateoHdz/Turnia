@@ -1,0 +1,44 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-10-13T18:30:00Z" },
+  "title": "Turnia — Diseño funcional",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 390, "h": 844, "title": "1 · Inicio: crear cuenta y sede", "is_interactive": true, "radius": 28 },
+    "Equipo.dc.html": { "x": 470, "y": 0, "w": 390, "h": 844, "title": "2 · Equipo", "is_interactive": true, "radius": 28 },
+    "Horario.dc.html": { "x": 940, "y": 0, "w": 390, "h": 844, "title": "3 · Horario: vista por día", "is_interactive": true, "radius": 28 },
+    "HorarioPersona.dc.html": { "x": 1410, "y": 0, "w": 390, "h": 844, "title": "4 · Horario: vista por persona", "is_interactive": true, "radius": 28 },
+    "Cubrir.dc.html": { "x": 1880, "y": 0, "w": 390, "h": 844, "title": "5 · ¿Quién cubre el turno?", "is_interactive": true, "radius": 28 },
+    "Turno.dc.html": { "x": 2350, "y": 0, "w": 390, "h": 844, "title": "6 · Detalle del costo de un turno", "is_interactive": true, "radius": 28 },
+    "Escenarios.dc.html": { "x": 2820, "y": 0, "w": 390, "h": 844, "title": "7 · Escenarios A y B", "is_interactive": true, "radius": 28 },
+    "Publicar.dc.html": { "x": 3290, "y": 0, "w": 390, "h": 844, "title": "8 · Publicar y enviar por WhatsApp", "is_interactive": true, "radius": 28 },
+    "Cuenta.dc.html": { "x": 3760, "y": 0, "w": 390, "h": 844, "title": "9 · Cuenta y suscripción", "is_interactive": true, "radius": 28 },
+    "VistaEmpleado.dc.html": { "x": 0, "y": 1400, "w": 390, "h": 844, "title": "10 · Lo que ve el empleado (enlace público)", "radius": 28 },
+    "Escritorio.dc.html": { "x": 470, "y": 1400, "w": 1440, "h": 900, "title": "11 · Horario en computador", "expand": "fill" },
+    "Calculadora.dc.html": { "x": 0, "y": 2800, "w": 390, "h": 844, "title": "12 · Calculadora gratuita de recargos", "is_interactive": true, "radius": 28 },
+    "Landing.dc.html": { "x": 470, "y": 2800, "w": 1280, "h": 4200, "title": "13 · Página de inicio pública", "expand": "fill", "is_interactive": true }
+  },
+  "order": [
+    "Main.dc.html",
+    "Equipo.dc.html",
+    "Horario.dc.html",
+    "HorarioPersona.dc.html",
+    "Cubrir.dc.html",
+    "Turno.dc.html",
+    "Escenarios.dc.html",
+    "Publicar.dc.html",
+    "Cuenta.dc.html",
+    "VistaEmpleado.dc.html",
+    "Escritorio.dc.html",
+    "Calculadora.dc.html",
+    "Landing.dc.html"
+  ],
+  "notes": {
+    "filaApp": { "x": 0, "y": -320, "text": "App del dueño, en el celular", "kind": "title1", "maxW": 4150 },
+    "filaEquipo": { "x": 0, "y": 1080, "text": "El empleado y el computador", "kind": "title1", "maxW": 1910 },
+    "filaPublico": { "x": 0, "y": 2480, "text": "Sitio público: el gancho", "kind": "title1", "maxW": 1750 },
+    "comoProbar": { "x": 4230, "y": 0, "w": 340, "maxH": 520, "size": "m", "color": "teal", "text": "Cómo probarlo\n\nPulsa Play en «1 · Inicio» y recorre la app completa: crea la sede, revisa el equipo, arma la semana, compara escenarios y envía el horario.\n\nCada pantalla de esta fila es la misma app abierta en un punto distinto, así que todo funciona en cualquiera.\n\nLos datos son de ejemplo: un restaurante en Cali con 8 personas, semana del 19 al 25 de octubre de 2026. Todos los costos los calcula en vivo el motor de reglas." }
+  },
+  "designSystems": []
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Turnia · Horario del empleado</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; overflow-y: auto; background: #F3F4EF; color: #16231F; font-family: Manrope, 'Segoe UI', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; gap: 14px; padding: 20px 16px 24px">
+  <div style="display: flex; align-items: center; gap: 10px">
+    <span style="width: 40px; height: 40px; border-radius: 12px; background: #16231F; color: #FFFFFF; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center">SP</span>
+    <div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 800">Sazón del Pacífico</span><span style="font-size: 12px; color: #55625C">Sede San Fernando · Cali</span></div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 4px">
+    <span style="font-size: 14px; color: #55625C; font-weight: 600">Hola, Jhon Fredy</span>
+    <h1 style="margin: 0; font-family: 'Bricolage Grotesque', Manrope, sans-serif; font-size: 28px; line-height: 1.1; letter-spacing: -0.02em">Tu horario del 19 al 25 de octubre</h1>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: 14px; background: #FFFFFF; border: 1px solid #DEE2DA"><span style="font-size: 12px; color: #55625C; font-weight: 700">Total de la semana</span><span style="font-size: 22px; font-weight: 800">48 h</span></div>
+    <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: 14px; background: #E3F1EC; border: 1px solid #B9DDD0; color: #0B5546"><span style="font-size: 12px; font-weight: 700">Descansas</span><span style="font-size: 22px; font-weight: 800">Lunes 19</span></div>
+  </div>
+  <div style="display: flex; flex-direction: column; border-radius: 16px; background: #FFFFFF; border: 1px solid #DEE2DA; overflow: hidden">
+    <sc-for list="{{ dias }}" as="d" hint-placeholder-count="7">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid #EDEFE9; {{ d.fondo }}">
+        <span style="width: 46px; display: flex; flex-direction: column; align-items: center; flex-shrink: 0"><span style="font-size: 12px; font-weight: 800; color: #55625C">{{ d.dia }}</span><span style="font-size: 20px; font-weight: 800">{{ d.num }}</span></span>
+        <span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 800">{{ d.horario }}</span><span style="font-size: 12px; font-weight: 700; {{ d.notaEstilo }}">{{ d.nota }}</span></span>
+        <span style="font-size: 14px; font-weight: 800; color: #34413C">{{ d.horas }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <a href="#" style="min-height: 50px; border-radius: 12px; background: #0E6B57; color: #FFFFFF; font: 800 15px Manrope, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Agregar a mi calendario</a>
+  <a href="#" style="min-height: 50px; border-radius: 12px; border: 1px solid #DEE2DA; background: #FFFFFF; color: #16231F; font: 800 15px Manrope, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z"></path></svg>Escribir a la administración</a>
+  <span style="font-size: 12px; line-height: 1.5; color: #55625C">Publicado el martes 13 de octubre a las 6:40 p. m. Si cambia algo, este mismo enlace se actualiza. El enlace es personal: no lo compartas.</span>
+  <span style="font-size: 12px; color: #55625C; margin-top: auto; text-align: center">Horario hecho con <strong style="color: #0E6B57">Turnia</strong></span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var turno = { horario: '3:00 p. m. a 11:00 p. m.', horas: '8 h' };
+    var normal = { fondo: 'background: #FFFFFF', nota: 'Turno de tarde', notaEstilo: 'color: #55625C' };
+    var filas = [
+      { dia: 'LUN', num: '19', horario: 'Descanso', horas: '', fondo: 'background: #E3F1EC', nota: 'Día libre', notaEstilo: 'color: #0B5546' },
+      Object.assign({ dia: 'MAR', num: '20' }, turno, normal),
+      Object.assign({ dia: 'MIÉ', num: '21' }, turno, normal),
+      Object.assign({ dia: 'JUE', num: '22' }, turno, normal),
+      Object.assign({ dia: 'VIE', num: '23' }, turno, normal),
+      Object.assign({ dia: 'SÁB', num: '24' }, turno, normal),
+      Object.assign({ dia: 'DOM', num: '25' }, turno, { fondo: 'background: #FFFFFF', nota: 'Domingo', notaEstilo: 'color: #8A5300' })
+    ];
+    return { dias: filas };
+  }
+}
+</script>
+</body>
+</html>
